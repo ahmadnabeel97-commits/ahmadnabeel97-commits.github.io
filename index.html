@@ -975,6 +975,7 @@ nav button[aria-current=true]{background:var(--c3)!important;color:var(--accent)
 .ws-sw .rv-act button.ws-b.on{background:var(--good);color:#fff}
 .ws-sw .rv-act button.ws-b+button.ws-b{border-left:1px solid rgba(255,255,255,.3)}
 .ws-sw .rv-act button small{color:inherit}
+.ws-sw .rv-act button.ws-b.pd-b{width:96px;font-size:12px;letter-spacing:0}
 .ws-sw .rv-st span{font-size:13px}.ws-sw.ws-done .rv-st span{color:var(--good)}
 /* ===== Planner (Gantt) ===== */
 .gt-top{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 10px}.gt-top .seg{margin:0;flex:0 1 auto}.gt-top .seg button{flex:0 0 auto;padding:6px 14px}
@@ -1200,6 +1201,61 @@ nav button[aria-current=true]{background:var(--c3)!important;color:var(--accent)
 .ex-covp{flex:1 1 100%;margin-top:8px}
 .ex-covp .ex-cov{margin-top:6px}
 .ex-covb{min-height:32px;padding:4px 10px;font-size:12px}
+
+/* Calendar popover + compact dialog */
+#c-info{position:fixed;z-index:45;width:268px;max-width:calc(100vw - 16px);background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:8px 10px;box-shadow:0 8px 26px rgba(0,0,0,.28);font-size:13px}
+#c-info .ci-top{display:flex;align-items:flex-start;gap:6px}
+#c-info-t{flex:1;min-width:0;line-height:1.35}
+#c-info-t .ci-n{display:block;color:var(--mute);font-size:12px;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#c-info button{min-height:28px;padding:0 10px;font-size:12px;border-radius:9px}
+#c-info .ci-x{min-height:24px;width:24px;padding:0;font-size:16px;line-height:1;flex:none}
+#c-info-act,#c-info-act2{display:flex;gap:5px;margin-top:7px}
+#c-info-act button:not(.ci-del),#c-info-act2 button:not(.ci-del){flex:1}
+#c-info .ci-del{background:transparent;color:var(--mute);border:1px solid var(--line);padding:0 8px}
+@media(max-width:699px){#c-info{position:static;width:auto;max-width:none;margin-top:8px;box-shadow:none;border-radius:10px}}
+#dlg>div{padding:12px 14px!important;border-radius:16px!important;max-height:90%!important}
+#dlg label{margin:7px 0 3px}
+#dlg input,#dlg select,#dlg #d-tbtn{min-height:36px;padding:6px 8px}
+#dlg #d-save,#dlg #d-cancel{min-height:36px}
+#dlg .d-row3{gap:6px}#dlg .d-row3>*{min-width:0}#dlg .d-tcol{flex:1.15}
+#dlg #d-mode button{min-height:32px}
+#dlg .row[style*="margin-top:14px"]{margin-top:10px!important}
+
+/* Planner row size (Compact / Medium / Large) */
+.gt-bar{top:calc((var(--rh,38px) - var(--bh,24px))/2);height:var(--bh,24px)}
+.gt-bar.gt-bt{top:calc((var(--rh,38px) - var(--bth,18px))/2);height:var(--bth,18px)}
+.gt-t{font-size:var(--bf,11px)}.gt-bt .gt-t{font-size:var(--tf,10px)}
+.gt-add{top:calc((var(--rh,38px) - var(--bh,24px))/2);height:var(--bh,24px)}
+.gt-add.gt-at{top:calc((var(--rh,38px) - var(--bth,18px))/2);height:var(--bth,18px)}
+.gt-sum{top:calc((var(--rh,38px) - 8px)/2)}
+.gt-der{top:calc((var(--rh,38px) - 12px)/2)}
+.gt-clr select:disabled{opacity:.5}
+
+
+.gt-sz-c .gt-l b{font-size:12px;line-height:1.1}.gt-sz-c .gt-l small{font-size:10px;line-height:1.1}.gt-sz-c .gt-add{font-size:10.5px;padding:0 8px}.gt-sz-c .gt-bar .gt-t{padding:0 6px}
+
+/* Planner full screen: arrow to tuck the left sidebar away (desktop 1200px+) */
+#gt-navtog{display:none}
+@media(min-width:1200px){
+  body.gt-navmode #gt-navtog{display:flex;position:fixed;left:206px;top:24px;width:30px;height:30px;min-height:0;padding:0;border-radius:50%;align-items:center;justify-content:center;z-index:70;font-size:18px;font-weight:800;line-height:1;background:var(--accent);color:var(--on-accent);border:2px solid var(--surface);box-shadow:0 3px 10px rgba(0,0,0,.3);transition:left .2s}
+  body.gt-navhide #gt-navtog{left:10px}
+  html body nav{transition:transform .2s,visibility 0s}
+  html body.gt-navhide{padding-left:0!important}
+  html body.gt-navhide nav{transform:translateX(-105%)!important;visibility:hidden;pointer-events:none;transition:transform .2s,visibility 0s .2s}
+  html body.gt-navhide main:has(#v-tasks:not([hidden]) #tk-gantt:not([hidden])){max-width:none!important;padding-left:52px!important;padding-right:24px!important}
+}
+
+/* planned sessions: stretch bars on hover (mouse) */
+@media(hover:hover) and (pointer:fine){
+  .tl .blk.plan:not(.wb):hover{cursor:grab;box-shadow:0 0 0 2px var(--accent);z-index:4}
+  .tl .blk.plan:not(.wb):hover .ph{display:block}
+}
+@media(hover:hover) and (pointer:fine) and (min-width:700px){
+  .tl .blk.plan.wb:hover{cursor:grab;box-shadow:0 0 0 2px var(--accent);z-index:4}
+  .tl .blk.plan.wb:hover .ph{display:block;height:8px}
+  .tl .blk.plan.wb:hover .ph::after{width:20px;margin-left:-10px;height:3px}
+  .tl .blk.plan.wb:hover .ph[data-ph=t]::after{top:2px}.tl .blk.plan.wb:hover .ph[data-ph=b]::after{bottom:2px}
+}
 </style>
 <script>
 window.FB_CONFIG={
@@ -1305,7 +1361,7 @@ window.FB_CONFIG={
     <div class="cal" id="c-grid" hidden></div>
     <div id="c-daywrap"><div class="strip" id="c-strip"></div><div id="c-untimed" hidden></div>
     <div id="c-sel" hidden style="margin-top:8px;display:flex;gap:8px;align-items:center;background:var(--bg);border:1px solid var(--accent);border-radius:10px;padding:8px 10px"><span id="c-sel-t" style="flex:1;font-weight:600;font-size:14px"></span><button id="c-sel-add" style="min-height:36px;background:var(--accent);color:var(--on-accent)">Add</button><button class="ghost" id="c-sel-x" style="min-height:36px" aria-label="Clear selection">×</button></div>
-    <div id="c-info" hidden style="margin-top:8px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 10px"><span id="c-info-t" style="flex:1;font-size:13px;min-width:0"></span><button class="ghost" id="c-info-del" style="min-height:36px">Delete</button><button class="ghost" id="c-info-x" style="min-height:36px" aria-label="Close">×</button><div id="c-info-act" hidden style="flex:1 1 100%;display:flex;gap:6px"><button id="c-info-start" style="flex:1;min-height:36px;background:var(--accent);color:var(--on-accent)">Start</button><button class="ghost" id="c-info-done" style="flex:1;min-height:36px">Done</button><button class="ghost" id="c-info-edit" style="flex:1;min-height:36px">Edit</button></div></div>
+    <div id="c-info" hidden role="dialog" aria-label="Session details"><div class="ci-top"><span id="c-info-t"></span><button class="ghost ci-x" id="c-info-x" aria-label="Close">×</button></div><div id="c-info-act" hidden><button id="c-info-start">Start</button><button class="ghost" id="c-info-done">Done</button><button class="ghost" id="c-info-edit">Edit</button><button class="ghost ci-del" id="c-info-del">Delete</button></div><div id="c-info-act2" hidden><button class="ghost ci-del" id="c-info-del2">Delete</button></div></div>
     <div id="c-split"><div id="c-scroll" style="height:384px;overflow-y:auto;overscroll-behavior:contain;border:1px solid var(--line);border-radius:10px"><div class="tl" id="c-tl"></div></div><button type="button" id="c-ptab" aria-controls="c-panel" aria-expanded="false" aria-label="Show tasks panel">Tasks</button><aside id="c-panel" hidden aria-label="Tasks for this day"><div id="c-pin"></div></aside></div><div class="card" id="c-tasks" style="margin-top:10px;padding:12px"></div></div>
   </div>
   <h2 id="c-day-title" hidden></h2>
@@ -1451,18 +1507,18 @@ window.FB_CONFIG={
 </section>
 </main>
 
-<div id="dlg" hidden role="dialog" aria-modal="true" aria-labelledby="d-title" style="position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;padding:16px">
-  <div style="background:var(--surface);color:var(--ink);width:100%;max-width:320px;border:1px solid var(--line);border-radius:16px;padding:14px;max-height:80%;overflow:auto;box-shadow:0 8px 30px rgba(0,0,0,.35)">
+<div id="dlg" hidden role="dialog" aria-modal="true" aria-labelledby="d-title" style="position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.12);display:flex;align-items:center;justify-content:center;padding:16px">
+  <div style="background:var(--surface);color:var(--ink);width:100%;max-width:300px;border:1px solid var(--line);border-radius:16px;padding:14px;max-height:80%;overflow:auto;box-shadow:0 8px 30px rgba(0,0,0,.35)">
     <b id="d-title" style="font-family:'Fraunces',Georgia,serif;font-size:16px;font-weight:600">Add study time</b>
     <div id="d-sub" style="color:var(--mute);font-size:14px"></div>
     <div id="d-mode"><button type="button" class="ghost" data-dmode="log" aria-pressed="true">Log time</button><button type="button" class="ghost" data-dmode="plan" aria-pressed="false">Plan session</button></div>
     <label for="d-n">Topic or note (optional)</label><input id="d-n" type="text" placeholder="Type a topic to search, or write a note" autocomplete="off">
     <label for="d-subj">Subject</label><select id="d-subj"></select>
-    <div class="row">
+    <div class="row d-row3">
       <div><label for="d-h">Hours</label><input id="d-h" type="number" inputmode="numeric" min="0" max="24" placeholder="0"></div>
       <div><label for="d-m">Minutes</label><input id="d-m" type="number" inputmode="numeric" min="0" max="59" placeholder="0"></div>
+      <div class="d-tcol"><label for="d-tbtn">Start</label><button class="ghost" id="d-tbtn" style="width:100%;text-align:center;font-weight:500">Set time</button><div id="d-ts" hidden></div></div>
     </div>
-    <label>Start time</label><button class="ghost" id="d-tbtn" style="width:100%;text-align:left;font-weight:400">Tap to choose a start time</button><div id="d-ts" hidden></div>
     <div class="row" style="margin-top:14px"><button class="ghost" id="d-cancel">Cancel</button><button id="d-save" style="background:var(--accent);color:var(--on-accent)">Save time</button></div>
     <div class="msg" id="d-msg"></div>
   </div>
@@ -1479,6 +1535,7 @@ window.FB_CONFIG={
 
 <div class="card" id="hm-gt" role="dialog" aria-label="Today&rsquo;s topics" hidden></div>
 <div class="toast" id="toast" hidden></div>
+<button type="button" id="gt-navtog" aria-label="Hide sidebar" aria-expanded="true" title="Hide sidebar for a full-screen Planner">\u2039</button>
 <nav>
   <div class="brandbar"><svg class="i" viewBox="0 0 24 24" style="width:46px;height:46px"><path d="M12 6c-2-1.5-5-2-8-1.5V18c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V4.5C17 4 14 4.5 12 6zM12 6v13.5"/></svg>StudyTrack<small>Plan • Focus • Achieve</small></div>
   <button data-v="log" aria-current="true"><svg class="i" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Home</button>
@@ -1800,10 +1857,10 @@ $('#c-tasks').addEventListener('click',calTaskClick);
 $('#c-pin').addEventListener('click',calTaskClick);
 $('#c-tl').onclick=function(e){
   if(Date.now()-pinchAt<500)return;
-  var bk=e.target.closest('[data-blk]');if(bk){infoId=bk.dataset.blk;infoConfirm=false;draft=null;drawDraft();var lg=S.logs.filter(function(x){return x.id===infoId})[0]||S.plans.filter(function(x){return x.id===infoId})[0];if(lg&&lg.date!==cSel){cSel=lg.date;renderCal()}else{updInfo();fitTl()}return}
+  var bk=e.target.closest('[data-blk]');if(bk){var bid=bk.dataset.blk,isPl=!!planById(bid)&&!S.logs.some(function(x){return x.id===bid});if(isPl&&plPick!==bid){plPick=bid;infoId=null}else{infoId=bid;if(isPl)plPick=bid}infoConfirm=false;draft=null;drawDraft();var lg=S.logs.filter(function(x){return x.id===infoId})[0]||S.plans.filter(function(x){return x.id===infoId})[0];if(lg&&lg.date!==cSel){cSel=lg.date;renderCal()}else{updInfo();fitTl()}return}
   if(e.target.closest('#c-draft'))return;
   var r=this.getBoundingClientRect(),sm=Math.max(0,Math.min(1440-slotMin,Math.floor((e.clientY-r.top)/SLOT_PX)*slotMin));
-  infoId=null;updInfo();fitTl();
+  infoId=null;plPick=null;updInfo();fitTl();
   if(cMode==='week'){var wd=new Date(cSel+'T00:00:00');wd.setDate(wd.getDate()-wd.getDay());var cw=(r.width-56)/7,ci=Math.max(0,Math.min(6,Math.floor((e.clientX-r.left-56)/cw)));wd.setDate(wd.getDate()+ci);cSel=ymd(wd);renderCal();openDlg(sm,slotMin);return}
   draft={date:cSel,s:sm,e:sm+slotMin};drawDraft();
 };
@@ -2007,7 +2064,8 @@ function plApply(){
   updInfo();
 }
 $('#c-tl').addEventListener('pointerdown',function(e){
-  var el=e.target.closest('.blk.plan.sel');if(!el)return;
+  var el=e.target.closest('.blk.plan');if(!el)return;
+  if(!el.classList.contains('sel')&&(e.pointerType!=='mouse'||e.button!==0))return;
   var wk=cMode==='week';if(wk?(window.innerWidth<700||!el.classList.contains('wb')):el.classList.contains('wb'))return;
   var p=planById(el.dataset.blk);if(!p)return;
   var hd=e.target.closest('[data-ph]'),tr=this.getBoundingClientRect();
@@ -2126,7 +2184,7 @@ function cpDrop(id,sm,dt){
   var lp=tkPlanOf(k);
   if(lp){lp.date=dt;lp.startMin=sm;lp.min=mn}
   else{lp={id:uid(),date:dt,startMin:sm,min:mn,subj:k.subjectId||null,note:k.title,taskId:k.id};S.plans.push(lp)}
-  cSel=dt;infoId=lp.id;infoConfirm=false;draft=null;
+  cSel=dt;infoId=null;plPick=null;infoConfirm=false;draft=null;
   save();render();toast('Planned for '+(cMode==='week'?new Date(dt+'T00:00:00').toLocaleDateString(undefined,{weekday:'short'})+', ':'')+tl12(sm));
 }
 $('#c-pin').addEventListener('contextmenu',function(e){if(e.target.closest('[data-pt]'))e.preventDefault()});
@@ -2157,7 +2215,7 @@ $('#c-now').onclick=function(){
   sc.scrollIntoView({block:'nearest',behavior:'smooth'});
 };
 var clk={h:12,m:0,pm:false,mode:'h'},clkDown=false,clkP='l';
-function lblT(p){var b=$('#'+p+'-tbtn');if(!b)return;var t=getT(p);b.textContent=t===null?'Tap to choose a start time':tl12(t)}
+function lblT(p){var b=$('#'+p+'-tbtn');if(!b)return;var t=getT(p);b.textContent=t===null?'Set time':tl12(t)}
 function openClk(p){
   clkP=p;var t=getT(p),d=new Date();
   if(t===null)t=d.getHours()*60+d.getMinutes();
@@ -2202,21 +2260,39 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')$('#clk').hi
 $('#l-tbtn').onclick=function(){openClk('l')};
 $('#d-tbtn').onclick=function(){openClk('d')};
 lblT('l');
-var infoId=null,infoConfirm=false;
+var infoId=null,infoConfirm=false,plPick=null;
+var infoPx=null;
+document.addEventListener('click',function(e){infoPx=(e.target.closest&&e.target.closest('#c-tl [data-blk]'))?e.clientX:null},true);
+function posInfo(){
+  var bar=$('#c-info');if(!bar||bar.hidden||window.innerWidth<700)return;
+  var el=null,n=document.querySelectorAll('[data-blk]'),i;
+  for(i=0;i<n.length;i++)if(n[i].dataset.blk===infoId&&(n[i].closest('#c-tl')||n[i].closest('#c-untimed'))){el=n[i];break}
+  if(!el)return;
+  var r=el.getBoundingClientRect(),sc=$('#c-scroll'),sr=sc?sc.getBoundingClientRect():null;
+  if(sr&&el.closest('#c-tl')&&(r.bottom<sr.top+4||r.top>sr.bottom-4)){bar.style.visibility='hidden';return}
+  bar.style.visibility='';
+  var w=bar.offsetWidth||268,h=bar.offsetHeight||90,vw=window.innerWidth,vh=window.innerHeight;
+  var lo=sr?sr.left+4:8,hi=sr?sr.right-4:vw-8,px=(infoPx!==null&&infoPx>=r.left&&infoPx<=r.right)?infoPx:r.left+60;
+  var x=px+10;if(x+w>hi)x=px-w-10;if(x<lo)x=Math.max(lo,Math.min(hi-w,r.left+8));
+  var y=r.top;if(y+h>vh-8)y=vh-h-8;if(y<8)y=8;
+  bar.style.left=x+'px';bar.style.top=y+'px';
+}
 function updInfo(){
   var bar=$('#c-info'),l=null,p=null,i;
   for(i=0;i<S.logs.length;i++)if(S.logs[i].id===infoId)l=S.logs[i];
   if(!l)for(i=0;i<S.plans.length;i++)if(S.plans[i].id===infoId)p=S.plans[i];
   var it=l||p;
-  plSel(p&&p.date===cSel?p.id:null);
+  var pk=plPick?planById(plPick):null;plSel(pk&&pk.date===cSel?pk.id:(p&&p.date===cSel?p.id:null));
   if(!it||it.date!==cSel){infoId=null;bar.hidden=true;return}
-  $('#c-info-act').hidden=!p;
-  if(p)$('#c-info-t').innerHTML='<b>'+(planPast(p)?'Missed plan':'Planned')+'</b> '+esc(sname(p.subj))+' '+tl12(p.startMin)+' to '+tl12(p.startMin+p.min)+' ('+fmt(p.min)+')'+(p.note?'<br>'+esc(p.note):'');
-  else $('#c-info-t').innerHTML='<b>'+esc(sname(l.subj))+'</b> '+(l.start?tf(l.start)+' to '+tf(l.start+l.min*60000):'no start time')+' ('+fmt(l.min)+')'+(l.note?'<br>'+esc(l.note):'');
-  $('#c-info-del').textContent=infoConfirm?'Delete?':'Delete';
-  $('#c-info-del').style.color=infoConfirm?'var(--bad)':'';
-  bar.hidden=false;
+  $('#c-info-act').hidden=!p;$('#c-info-act2').hidden=!!p;
+  if(p)$('#c-info-t').innerHTML='<b>'+(planPast(p)?'Missed plan':'Planned')+'</b> '+esc(sname(p.subj))+' · '+tl12(p.startMin)+'–'+tl12(p.startMin+p.min)+' · '+fmt(p.min)+(p.note?'<span class="ci-n">'+esc(p.note)+'</span>':'');
+  else $('#c-info-t').innerHTML='<b>'+esc(sname(l.subj))+'</b> · '+(l.start?tf(l.start)+'–'+tf(l.start+l.min*60000):'no start time')+' · '+fmt(l.min)+(l.note?'<span class="ci-n">'+esc(l.note)+'</span>':'');
+  ['#c-info-del','#c-info-del2'].forEach(function(q){$(q).textContent=infoConfirm?'Delete?':'Delete';$(q).style.color=infoConfirm?'var(--bad)':'';$(q).style.borderColor=infoConfirm?'var(--bad)':''});
+  bar.hidden=false;posInfo();
 }
+(function(){var sc=$('#c-scroll');if(sc)sc.addEventListener('scroll',posInfo);window.addEventListener('resize',posInfo);window.addEventListener('scroll',posInfo,true)})();
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&(infoId||plPick)&&$('#dlg').hidden&&$('#clk').hidden){infoId=null;infoConfirm=false;plPick=null;updInfo()}});
+$('#c-info-del2').onclick=function(){$('#c-info-del').onclick()};
 $('#c-info-del').onclick=function(){
   if(!infoConfirm){infoConfirm=true;updInfo();return}
   S.logs=S.logs.filter(function(x){return x.id!==infoId});S.plans=S.plans.filter(function(x){return x.id!==infoId});infoId=null;infoConfirm=false;save();render();
@@ -3066,6 +3142,19 @@ function wsToggle(id,key){
     t.updatedAt=Date.now();save();wsOpen=id;renderSyl();wsReopen();
   });
 }
+function pdToggle(id){
+  var t=S.topics.find(function(z){return z.id===id}),u=t&&S.units.find(function(z){return z.id===t.unitId});if(!t||!u||sylTrack!=='prelim')return;
+  var on=!(trkViewProg(S,t,u)>=100),prev=JSON.stringify({w:t.wsteps||null,m:t.manuallyCompleted,s:t.studyStatus,d:t.trkDone||null,r:t.rev===undefined?'__u':t.rev});
+  trkMark(t,u,'prelim',on,Date.now());save();wsOpen=id;renderSyl();wsReopen();
+  rvUndoShow(on?'Marked done':'Reopened',function(){
+    var o=JSON.parse(prev);
+    if(o.w)t.wsteps=o.w;else delete t.wsteps;
+    t.manuallyCompleted=o.m;t.studyStatus=o.s;
+    if(o.d)t.trkDone=o.d;else delete t.trkDone;
+    if(o.r==='__u')delete t.rev;else t.rev=o.r;
+    t.updatedAt=Date.now();save();wsOpen=id;renderSyl();wsReopen();
+  });
+}
 function trkNote(t,u){
   var a=trkTopic(t,u);if(sylTrack!=='all'||a.length<2)return'';
   return' <em style="color:var(--mute);font-weight:600">'+a.map(function(x){return trkName(x)+' '+(trkProgL(S,t,u,x)>=100?'\u2713':'\u2014')}).join(' \u00b7 ')+'</em>';
@@ -3236,16 +3325,16 @@ function renderSyl(){
         var taskRows=topicTasks.length?topicTasks.map(function(k){var isDone=k.status==='completed';return '<div class="tt-swipe" data-id="'+k.id+'"><div class="tt-bg tt-bgd" aria-hidden="true"><span>'+(isDone?'↺ To do':'✓ Done')+'</span></div><div class="tt-bg tt-bgx" aria-hidden="true"><span>Delete</span></div><div class="tt-fg" tabindex="0" role="button" data-sm="topic-task-edit" data-id="'+k.id+'" aria-label="'+esc(k.title)+(isDone?' (done)':'')+'"><span class="tt-title'+(isDone?' done':'')+'">'+esc(k.title)+'</span></div></div>'}).join(''):'<small style="color:var(--mute)">No tasks linked to this topic yet.</small>';
         var taskPanel=expanded?'<div class="topic-task-panel">'+taskRows+(topicTasks.length?'<div class="tt-hint">Swipe right to complete · left to delete</div>':'')+(!isArchived?'<div class="topic-task-add"><input data-sm-input="topic-task" data-parent="'+t.id+'" placeholder="Add a task to this topic"><button data-sm="add-topic-task" data-id="'+t.id+'">Add</button></div><div class="tparse" data-sm-parse="'+t.id+'" hidden></div>':'')+'</div>':'';
         var tm=!isArchived?trkChips(t.id,trkTopic(t,u),!!trkClean(t))+btn('edit-topic',t.id,'Edit')+btn('up-topic',t.id,'↑ Move up')+btn('down-topic',t.id,'↓ Move down')+btn('archive-topic',t.id,'Archive'):btn('edit-topic',t.id,'Edit')+btn('restore-topic',t.id,'Restore');
-        if(!isArchived&&wsTrack(sylTrack)){
-          var wst=wsGet(t,u,sylTrack),wc=WS_STEPS.filter(function(k){return wst[k[0]]}).length,tdn=topicTasks.filter(function(k){return k.status==='completed'}).length,
-              wl=WS_STEPS.map(function(k){var on=!!wst[k[0]];return'<button type="button" class="ws-b'+(on?' on':'')+'" data-ws="'+t.id+'" data-wk="'+k[0]+'" aria-pressed="'+(on?'true':'false')+'">'+(on?'\u2713 ':'')+k[1]+'</button>'}).join(''),
+        if(!isArchived&&(wsTrack(sylTrack)||sylTrack==='prelim')){
+          var pdM=sylTrack==='prelim',wst=pdM?{}:wsGet(t,u,sylTrack),wc=WS_STEPS.filter(function(k){return wst[k[0]]}).length,tdn=topicTasks.filter(function(k){return k.status==='completed'}).length,
+              wl=pdM?'<button type="button" class="ws-b pd-b'+(pr>=100?' on':'')+'" data-pd="'+t.id+'" aria-pressed="'+(pr>=100?'true':'false')+'">'+(pr>=100?'\u2713 ':'')+'Done</button>':WS_STEPS.map(function(k){var on=!!wst[k[0]];return'<button type="button" class="ws-b'+(on?' on':'')+'" data-ws="'+t.id+'" data-wk="'+k[0]+'" aria-pressed="'+(on?'true':'false')+'">'+(on?'\u2713 ':'')+k[1]+'</button>'}).join(''),
               wr='<button type="button" data-sm="toggle-topic-tasks" data-id="'+t.id+'">Tasks<small>'+taskCount+' \u00b7 '+(expanded?'Hide':'View')+'</small></button><button type="button" data-sm="task" data-id="'+t.id+'">+ Task</button><button type="button" data-sm="menu" data-id="'+t.id+'" aria-label="More actions">\u22ef</button>';
-          return '<div class="syx-topic"><div class="rv-sw ws-sw'+(pr>=100?' ws-done':'')+'" data-id="'+t.id+'" data-kind="t"><div class="rv-act rv-actL">'+wl+'</div><div class="rv-act rv-actR">'+wr+'</div><div class="rv-fg" tabindex="0"><div class="rv-tx"><b>'+esc(t.title)+'</b><small>'+wc+'/4 steps'+(taskCount?' \u00b7 '+tdn+'/'+taskCount+' task'+(taskCount===1?'':'s'):'')+'</small></div><div class="rv-st"><span>'+(pr>=100?'\u2713 ':'')+Math.round(pr)+'%</span></div></div></div>'+menuRow(t.id,tm)+taskPanel+'</div>';
+          return '<div class="syx-topic"><div class="rv-sw ws-sw'+(pr>=100?' ws-done':'')+'" data-id="'+t.id+'" data-kind="t"><div class="rv-act rv-actL">'+wl+'</div><div class="rv-act rv-actR">'+wr+'</div><div class="rv-fg" tabindex="0"><div class="rv-tx"><b>'+esc(t.title)+'</b><small>'+(pdM?(pr>=100?'Done':'Not done'):wc+'/4 steps')+(taskCount?' \u00b7 '+tdn+'/'+taskCount+' task'+(taskCount===1?'':'s'):'')+'</small></div><div class="rv-st"><span>'+(pr>=100?'\u2713 ':'')+Math.round(pr)+'%</span></div></div></div>'+menuRow(t.id,tm)+taskPanel+'</div>';
         }
         return '<div class="syx-topic"><label class="ck"><input type="checkbox" data-k="'+t.id+'"'+(pr>=100?' checked':'')+'><span>'+esc(t.title)+' <em>'+Math.round(pr)+'%</em>'+trkNote(t,u)+'</span></label><div class="syx-ta"><button class="ghost topic-task-toggle" data-sm="toggle-topic-tasks" data-id="'+t.id+'">'+taskCount+' task'+(taskCount===1?'':'s')+' · '+(expanded?'Hide':'View')+'</button>'+(!isArchived?'<button class="ghost" data-sm="task" data-id="'+t.id+'" title="Create task">+ Task</button>':'')+more(t.id)+'</div>'+menuRow(t.id,tm)+taskPanel+'</div>';
       }).join('');
       var um=!isArchived?trkChips(u.id,trkUnit(u),false)+btn('edit-unit',u.id,'Edit')+btn('up-unit',u.id,'↑ Move up')+btn('down-unit',u.id,'↓ Move down')+btn('archive-unit',u.id,'Archive'):btn('edit-unit',u.id,'Edit')+btn('restore-unit',u.id,'Restore');
-      unitHtml+='<div class="syx-unit" style="--uc:'+uc+'"><div class="syx-uh"><button type="button" class="syx-uhit" data-sm="unit-toggle" data-id="'+u.id+'" aria-expanded="'+(unitOpen?'true':'false')+'"><span class="syx-chev">'+(unitOpen?'▾':'▸')+'</span><span class="syx-ut"><b>'+esc(u.title)+'</b><small>'+td+'/'+ts.length+' topics'+(u.marks?' · '+esc(u.marks)+' marks':'')+(trkClean(u)?' · '+trkClean(u).map(trkName).join(', '):'')+'</small></span></button><b class="syx-up">'+up+'%</b>'+more(u.id)+'</div>'+bar(up)+menuRow(u.id,um)+(unitOpen?'<div class="syx-ub">'+(!isArchived&&wsTrack(sylTrack)&&ts.length?'<div class="tt-hint">Swipe right for steps \u00b7 left for tasks</div>':'')+topicHtml+(!isArchived?'<div class="row" style="margin-top:8px"><input data-sm-input="topic" data-parent="'+u.id+'" placeholder="Add a topic"><button data-sm="add-topic" data-id="'+u.id+'">Add topic</button></div>':'')+'</div>':'')+'</div>';
+      unitHtml+='<div class="syx-unit" style="--uc:'+uc+'"><div class="syx-uh"><button type="button" class="syx-uhit" data-sm="unit-toggle" data-id="'+u.id+'" aria-expanded="'+(unitOpen?'true':'false')+'"><span class="syx-chev">'+(unitOpen?'▾':'▸')+'</span><span class="syx-ut"><b>'+esc(u.title)+'</b><small>'+td+'/'+ts.length+' topics'+(u.marks?' · '+esc(u.marks)+' marks':'')+(trkClean(u)?' · '+trkClean(u).map(trkName).join(', '):'')+'</small></span></button><b class="syx-up">'+up+'%</b>'+more(u.id)+'</div>'+bar(up)+menuRow(u.id,um)+(unitOpen?'<div class="syx-ub">'+(!isArchived&&(wsTrack(sylTrack)||sylTrack==='prelim')&&ts.length?'<div class="tt-hint">Swipe right for '+(sylTrack==='prelim'?'done':'steps')+' \u00b7 left for tasks</div>':'')+topicHtml+(!isArchived?'<div class="row" style="margin-top:8px"><input data-sm-input="topic" data-parent="'+u.id+'" placeholder="Add a topic"><button data-sm="add-topic" data-id="'+u.id+'">Add topic</button></div>':'')+'</div>':'')+'</div>';
     });
     var sm=isArchived?btn('edit-subject',sb.id,'Edit name')+btn('restore-subject',sb.id,'Restore'):btn('edit-subject',sb.id,'Edit name')+btn('archive-subject',sb.id,'Archive');
     return '<div class="card syx-panel" style="--sc:'+color+'"><div class="syx-ph"><span class="syx-sd"></span><div class="syx-pt"><b>'+esc(sb.alt||sb.name)+'</b><small>'+esc(sb.alt?sb.name+' · ':'')+(sb.marks?sb.marks+' marks · ':'')+us.length+' unit'+(us.length===1?'':'s')+(stat?' · '+stat.done+'/'+stat.count+' topics':'')+'</small></div><b class="syx-pp">'+(stat?stat.p:0)+'%</b>'+more(sb.id)+'</div>'+bar(stat?stat.p:0)+menuRow(sb.id,sm)+(unitHtml||'<div class="syx-empty">No units yet. Add the first one below.</div>')+(!isArchived?'<div class="row syx-addunit"><input data-sm-input="unit" data-parent="'+sb.id+'" placeholder="Add a syllabus unit"><button data-sm="add-unit" data-id="'+sb.id+'">Add unit</button></div>':'')+'</div>';
@@ -3348,16 +3437,19 @@ sylUiRestore();
 $('#syl').addEventListener('click',function(e){
   var b=e.target.closest&&e.target.closest('[data-wk]');
   if(b){wsToggle(b.dataset.ws,b.dataset.wk);return}
+  var pb=e.target.closest&&e.target.closest('[data-pd]');
+  if(pb){pdToggle(pb.dataset.pd);return}
   var fg=e.target.closest&&e.target.closest('.rv-fg');
   if(fg&&fg.parentNode.classList.contains('ws-sw'))rvToggle(fg.parentNode);
 });
 
 /* ===== Planner (Gantt), step 2: unit bars + topic bars, Day/Week/Month zoom. S.gantt: {id,kind:'unit'|'topic',refId,start,end,updatedAt[,deleted,deletedAt]} (dates YYYY-MM-DD, end inclusive). Device-only view state lives in 'bcs-gt-ui' (track, open subjects, open units, zoom). ===== */
-var GT_KEY='bcs-gt-ui',gtTrack='prelim',gtOpen={},gtOpenU={},gtZoom='day',gtEdit=null,gtBlock=0,gtDrag=null,gtLeftDn=null,gtReady=false,gtRT=null;
+var GT_KEY='bcs-gt-ui',gtTrack='prelim',gtOpen={},gtOpenU={},gtZoom='day',gtSize='c',gtClr=null,gtEdit=null,gtBlock=0,gtDrag=null,gtLeftDn=null,gtReady=false,gtRT=null;
 var GT_ZOOMS=[{id:'day',n:'Day'},{id:'week',n:'Week'},{id:'month',n:'Month'}],GT_RE=/^\d{4}-\d{2}-\d{2}$/;
-(function(){try{var d=JSON.parse(localStorage.getItem(GT_KEY)||'null');if(d&&typeof d==='object'){if(SYL_TRACKS.some(function(x){return x.id===d.tr}))gtTrack=d.tr;if(d.o&&typeof d.o==='object'&&!Array.isArray(d.o))gtOpen=d.o;if(d.u&&typeof d.u==='object'&&!Array.isArray(d.u))gtOpenU=d.u;if(d.z==='day'||d.z==='week'||d.z==='month')gtZoom=d.z}}catch(e){}})();
-function gtUiSave(){try{localStorage.setItem(GT_KEY,JSON.stringify({tr:gtTrack,o:gtOpen,u:gtOpenU,z:gtZoom}))}catch(e){}}
-function gtDW(mob){return gtZoom==='week'?(mob?9:12):gtZoom==='month'?(mob?3:4):(mob?20:26)}
+(function(){try{var d=JSON.parse(localStorage.getItem(GT_KEY)||'null');if(d&&typeof d==='object'){if(SYL_TRACKS.some(function(x){return x.id===d.tr}))gtTrack=d.tr;if(d.o&&typeof d.o==='object'&&!Array.isArray(d.o))gtOpen=d.o;if(d.u&&typeof d.u==='object'&&!Array.isArray(d.u))gtOpenU=d.u;if(d.z==='day'||d.z==='week'||d.z==='month')gtZoom=d.z;if(d.s==='c'||d.s==='m'||d.s==='l')gtSize=d.s}}catch(e){}})();
+function gtUiSave(){try{localStorage.setItem(GT_KEY,JSON.stringify({tr:gtTrack,o:gtOpen,u:gtOpenU,z:gtZoom,s:gtSize}))}catch(e){}}
+var GT_SZ={c:{rh:27,bh:17,bth:13,f:11,tf:10,min:70,w:1},m:{rh:38,bh:24,bth:18,f:12,tf:11,min:46,w:1.4},l:{rh:38,bh:24,bth:18,f:13,tf:12,min:36,w:2}};
+function gtDW(mob){var b=gtZoom==='week'?(mob?9:12):gtZoom==='month'?(mob?3:4):(mob?20:26);return mob?b:Math.round(b*GT_SZ[gtSize].w)}
 function gtArr(){if(!Array.isArray(S.gantt))S.gantt=[];return S.gantt}
 function gtOk(g){return!!g&&!g.deleted&&GT_RE.test(g.start||'')&&GT_RE.test(g.end||'')}
 function gtBarAny(k,id){var a=gtArr(),i,f=null;for(i=0;i<a.length;i++){var g=a[i];if(g&&g.kind===k&&g.refId===id){if(gtOk(g))return g;if(!f)f=g}}return f}
@@ -3454,24 +3546,26 @@ function gtPinSoon(){if(!gtPinRaf)gtPinRaf=requestAnimationFrame(gtPin)}
 document.addEventListener('scroll',gtPinSoon,true);window.addEventListener('resize',gtPinSoon);
 function gtBarHtml(k,id,pu,title,b,p,n0,nn,DW,mob,late){
   var a=gtDn(b.start),e2=Math.max(a,gtDn(b.end)),w=(e2-a+1)*DW,pp=Math.round(p);
-  return'<div class="gt-bar'+(k==='topic'?' gt-bt':'')+(late?' gt-late':'')+'" tabindex="0" data-gt-k="'+k+'" data-gt-bar="'+id+'"'+(pu?' data-gt-pu="'+pu+'"':'')+' data-n0="'+n0+'" data-nn="'+nn+'" data-dw="'+DW+'" style="left:'+((a-n0)*DW)+'px;width:'+w+'px" title="'+esc(title)+' \u00b7 '+gtShort(a)+' \u2013 '+gtShort(e2)+' \u00b7 '+pp+'%'+(late?' \u00b7 '+(late.over?'overdue':'behind: '+late.el+'% of the time used, '+late.done+'% done'):'')+'"><i class="gt-fill style="width:'+pp+'%"></i>'+(w>=70?'<span class="gt-t">'+pp+'%</span>':'')+(late&&w>=24?'<span class="gt-lw">!</span>':'')+(mob||w<30?'':'<span class="gt-h gt-hl"></span><span class="gt-h gt-hr"></span>')+'</div>';
+  return'<div class="gt-bar'+(k==='topic'?' gt-bt':'')+(late?' gt-late':'')+'" tabindex="0" data-gt-k="'+k+'" data-gt-bar="'+id+'"'+(pu?' data-gt-pu="'+pu+'"':'')+' data-n0="'+n0+'" data-nn="'+nn+'" data-dw="'+DW+'" style="left:'+((a-n0)*DW)+'px;width:'+w+'px" title="'+esc(title)+' \u00b7 '+gtShort(a)+' \u2013 '+gtShort(e2)+' \u00b7 '+pp+'%'+(late?' \u00b7 '+(late.over?'overdue':'behind: '+late.el+'% of the time used, '+late.done+'% done'):'')+'"><i class="gt-fill" style="width:'+pp+'%"></i>'+(w>=(mob?70:GT_SZ[gtSize].min)?'<span class="gt-t">'+pp+'%</span>':'')+(late&&w>=24?'<span class="gt-lw">!</span>':'')+(mob||w<30?'':'<span class="gt-h gt-hl"></span><span class="gt-h gt-hr"></span>')+'</div>';
 }
 function renderGantt(){
   var el=$('#gt');if(!el)return;
   if(gtEdit&&gtPlan)gtPlan=null;
-  var mob=gtMobile(),DW=gtDW(mob),LW=mob?128:250,RH=38,HH=66,td=gtDn(today()),rows=gtModel(),i,n0,n1,lo=td-7,hi=td+90;
+  var mob=gtMobile(),DW=gtDW(mob),LW=mob?128:250,SZ=GT_SZ[mob?'c':gtSize],RH=SZ.rh,HH=66,td=gtDn(today()),rows=gtModel(),i,n0,n1,lo=td-7,hi=td+90;
   rows.forEach(function(r){if(r.k==='s')r.list.forEach(function(x){if(x.rmn!==null){lo=Math.min(lo,x.rmn-7);hi=Math.max(hi,x.rmx+14)}})});
   var exams=(S.exams||[]).filter(function(e){return e&&!e.deleted&&typeof e.date==='string'&&GT_RE.test(e.date)&&gtDn(e.date)>=td-60&&gtDn(e.date)<=td+400});
   exams.forEach(function(e){hi=Math.max(hi,gtDn(e.date)+10)});
   n0=lo-(((lo+4)%7+6)%7);n1=hi;var nn=n1-n0+1,W=nn*DW,gridW=gtZoom==='day'?DW:gtZoom==='week'?7*DW:W;
   var anyClosed=rows.some(function(r){return r.k==='s'&&!gtOpen[r.sb.id]});
-  var h='<div class="gt-top"><div class="seg" role="group" aria-label="Exam track">'+SYL_TRACKS.map(function(x){return'<button type="button" class="ghost" data-gt-track="'+x.id+'" aria-pressed="'+(gtTrack===x.id?'true':'false')+'">'+x.name+'</button>'}).join('')+'</div><div class="seg" role="group" aria-label="Zoom">'+GT_ZOOMS.map(function(z){return'<button type="button" class="ghost" data-gt-zoom="'+z.id+'" aria-pressed="'+(gtZoom===z.id?'true':'false')+'">'+z.n+'</button>'}).join('')+'</div><span class="gt-sp"></span>'+(rows.late&&rows.late.n?'<button type="button" class="ghost gt-latechip" data-gt-late="1" title="Open what is behind schedule">\u26a0 '+rows.late.n+' behind</button>':'')+(mob||!rows.length?'':'<button type="button" class="ghost" data-gt-plan="1" aria-pressed="'+(gtPlan?'true':'false')+'">Auto-plan</button>')+'<button type="button" class="ghost" data-gt-today="1">Today</button>'+(rows.length?'<button type="button" class="ghost" data-gt-all="'+(anyClosed?'1':'0')+'">'+(anyClosed?'Expand all':'Collapse all')+'</button>':'')+'</div>';
+  var h='<div class="gt-top"><div class="seg" role="group" aria-label="Exam track">'+SYL_TRACKS.map(function(x){return'<button type="button" class="ghost" data-gt-track="'+x.id+'" aria-pressed="'+(gtTrack===x.id?'true':'false')+'">'+x.name+'</button>'}).join('')+'</div><div class="seg" role="group" aria-label="Zoom">'+GT_ZOOMS.map(function(z){return'<button type="button" class="ghost" data-gt-zoom="'+z.id+'" aria-pressed="'+(gtZoom===z.id?'true':'false')+'">'+z.n+'</button>'}).join('')+'</div>'+(mob?'':'<div class="seg" role="group" aria-label="Row size">'+[['c','Compact'],['m','Medium'],['l','Large']].map(function(z){return'<button type="button" class="ghost" data-gt-size="'+z[0]+'" aria-pressed="'+(gtSize===z[0]?'true':'false')+'" title="Row and bar size">'+z[1]+'</button>'}).join('')+'</div>')+'<span class="gt-sp"></span>'+(rows.late&&rows.late.n?'<button type="button" class="ghost gt-latechip" data-gt-late="1" title="Open what is behind schedule">\u26a0 '+rows.late.n+' behind</button>':'')+(mob||!rows.length?'':'<button type="button" class="ghost" data-gt-plan="1" aria-pressed="'+(gtPlan?'true':'false')+'">Auto-plan</button>')+(mob||!rows.length?'':'<button type="button" class="ghost" data-gt-clr="1" aria-pressed="'+(gtClr?'true':'false')+'">Clear dates</button>')+'<button type="button" class="ghost" data-gt-today="1">Today</button>'+(rows.length?'<button type="button" class="ghost" data-gt-all="'+(anyClosed?'1':'0')+'">'+(anyClosed?'Expand all':'Collapse all')+'</button>':'')+'</div>';
   if(gtEdit){
     var ek=gtSplit(gtEdit),er=gtRec(ek.k,ek.id),eb=er?gtBar(ek.k,ek.id):null;
     if(er){
       h+='<div class="card gt-sheet"><div class="ch"><b>'+esc(er.title)+'</b><small style="color:var(--mute)">'+esc(er.sub)+'</small></div><div class="gt-sf"><label>Start<input type="date" id="gt-s" value="'+(eb?eb.start:gtYmd(td))+'"></label><label>End<input type="date" id="gt-e" value="'+(eb?eb.end:gtYmd(td+(ek.k==='topic'?2:13)))+'"></label></div><div class="gt-sa"><button type="button" data-gt-save="'+esc(gtEdit)+'">Save</button>'+(eb?'<button type="button" class="ghost" data-gt-clear="'+esc(gtEdit)+'">Remove dates</button>':'')+'<button type="button" class="ghost" data-gt-cancel="1">Cancel</button></div>'+(ek.k==='unit'?'<small style="color:var(--mute);display:block;margin-top:6px">Typing dates here changes only this unit bar. Drag the bar to move its topic bars along with it.</small>':'')+'<small id="gt-msg" style="color:var(--bad);display:block;margin-top:6px"></small></div>';
     }
   }
+  if(gtClr&&(gtEdit||gtPlan))gtClr=null;
+  if(gtClr&&!mob&&rows.length)h+=gtClrHtml(rows);
   if(gtPlan&&!mob&&rows.length)h+=gtPlanHtml(rows);
   if(!rows.length){
     h+='<div class="card empty">No units on the '+esc(trkName(gtTrack))+' track yet. Add subjects and units in the Syllabus tab, or switch track above.</div>';
@@ -3516,7 +3610,7 @@ function renderGantt(){
   });
   var tl='<div class="gt-today" style="left:'+((td-n0)*DW+DW/2-1)+'px"></div>';
   var exLines=ex.map(function(o){return'<div class="gt-exam" style="left:'+((o.dn-n0)*DW+DW/2)+'px;top:'+(HH-22)+'px"></div>'}).join('');
-  h+='<div class="gt-wrap" style="--dw:'+gridW+'px"><div class="gt-lc" style="width:'+LW+'px"><div class="gt-lh" style="height:'+HH+'px">Subject / unit / topic</div>'+lab+'</div><div class="gt-scroll" id="gt-scroll" data-gtn0="'+n0+'" data-gtdw="'+DW+'"><div class="gt-inner" style="width:'+W+'px;height:'+(HH+bodyH)+'px"><div class="gt-hdr"><div class="gt-hm">'+mh+'</div><div class="gt-hd">'+dh+'</div><div class="gt-hx">'+exStrip+'</div></div>'+trk+tl+exLines+'</div></div></div>';
+  h+='<div class="gt-wrap gt-sz-'+(mob?'c':gtSize)+'" style="--dw:'+gridW+'px;--rh:'+RH+'px;--bh:'+SZ.bh+'px;--bth:'+SZ.bth+'px;--bf:'+SZ.f+'px;--tf:'+SZ.tf+'px"><div class="gt-lc" style="width:'+LW+'px"><div class="gt-lh" style="height:'+HH+'px">Subject / unit / topic</div>'+lab+'</div><div class="gt-scroll" id="gt-scroll" data-gtn0="'+n0+'" data-gtdw="'+DW+'"><div class="gt-inner" style="width:'+W+'px;height:'+(HH+bodyH)+'px"><div class="gt-hdr"><div class="gt-hm">'+mh+'</div><div class="gt-hd">'+dh+'</div><div class="gt-hx">'+exStrip+'</div></div>'+trk+tl+exLines+'</div></div></div>';
   h+='<div class="gt-hint">'+(mob?'View only on the phone. Use a computer to move and stretch bars.':'Drag a bar to move it, drag its ends to stretch it, click it to type exact dates. Moving a unit bar carries its topic bars along. Use the arrow beside a unit to show its topics. A unit or topic without a bar can be dragged by its name onto the timeline (5 days for a unit, 3 for a topic), then resized. Progress fill follows the '+esc(trkName(gtTrack))+' track. A red bar is behind schedule: more of its time has passed than its progress shows.')+'</div>';
   el.innerHTML=h;
   var sc=$('#gt-scroll');
@@ -3526,7 +3620,7 @@ function renderGantt(){
 $('#gt').addEventListener('scroll',function(e){var s=e.target;if(s&&s.id==='gt-scroll')gtLeftDn=(+s.dataset.gtn0)+s.scrollLeft/(+s.dataset.gtdw)},true);
 $('#gt').addEventListener('click',function(e){
   var t=e.target,b;
-  if((b=t.closest('[data-gt-track]'))){gtTrack=b.dataset.gtTrack;gtEdit=null;gtPlan=null;gtUiSave();renderGantt();return}
+  if((b=t.closest('[data-gt-track]'))){gtTrack=b.dataset.gtTrack;gtEdit=null;gtPlan=null;gtClr=null;gtUiSave();renderGantt();return}
   if((b=t.closest('[data-gt-zoom]'))){gtZoom=b.dataset.gtZoom;gtUiSave();renderGantt();return}
   if((b=t.closest('[data-gt-sub]'))){var sid=b.dataset.gtSub;if(gtOpen[sid])delete gtOpen[sid];else gtOpen[sid]=true;gtUiSave();renderGantt();return}
   if((b=t.closest('[data-gt-usub]'))){var uid2=b.dataset.gtUsub;if(gtOpenU[uid2])delete gtOpenU[uid2];else gtOpenU[uid2]=true;gtUiSave();renderGantt();return}
@@ -3553,6 +3647,7 @@ $('#gt').addEventListener('click',function(e){
 });
 $('#gt').addEventListener('keydown',function(e){
   var bar=e.target.closest&&e.target.closest('[data-gt-bar]');
+  if(bar&&(e.key==='Delete'||e.key==='Backspace')&&!gtMobile()){e.preventDefault();gtCommit(bar.dataset.gtK,bar.dataset.gtBar,null,null,'Dates removed');renderGantt();return}
   if(bar&&(e.key==='Enter'||e.key===' ')&&!gtMobile()){e.preventDefault();gtEdit=bar.dataset.gtK+':'+bar.dataset.gtBar;renderGantt();var s=$('#gt-s');if(s)s.focus()}
 });
 $('#gt').addEventListener('pointerdown',function(e){
@@ -3600,6 +3695,29 @@ $('#gt').addEventListener('keydown',function(e){
 });
 /* Auto-plan: spread the topics of a subject (or one unit) evenly over the working days between a start and a deadline; preview, then apply as ONE undo */
 var gtPlan=null,GT_DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+/* Clear dates: removes planner bars of one subject / one unit / everything on the current track, as ONE undo */
+function gtClrScope(rows){
+  var C=gtClr,ch=[],nu=0,nt=0;
+  rows.forEach(function(r){if(r.k!=='s'||(C.sid&&r.sb.id!==C.sid))return;
+    r.list.forEach(function(x){if(C.uid&&x.u.id!==C.uid)return;
+      if(x.bar){ch.push({k:'unit',id:x.u.id,start:null,end:null});nu++}
+      x.tr.forEach(function(z){if(z.bar){ch.push({k:'topic',id:z.t.id,start:null,end:null});nt++}});
+    });
+  });
+  return{ch:ch,nu:nu,nt:nt};
+}
+function gtClrHtml(rows){
+  var C=gtClr,subs=rows.filter(function(r){return r.k==='s'});
+  if(C.sid&&!subs.some(function(r){return r.sb.id===C.sid}))C.sid='';
+  var cur=C.sid?subs.find(function(r){return r.sb.id===C.sid}):null;
+  if(C.uid&&(!cur||!cur.list.some(function(x){return x.u.id===C.uid})))C.uid='';
+  var sc=gtClrScope(rows),n=sc.ch.length;
+  return'<div class="card gt-sheet gt-clr"><div class="ch"><b>Clear dates</b><small style="color:var(--mute)">'+esc(trkName(gtTrack))+' track \u00b7 removes bars from the Planner (your topics and tasks are not touched)</small></div><div class="gt-sf">'
+   +'<label>Subject<select id="gc-sub"><option value="">All subjects</option>'+subs.map(function(r){return'<option value="'+r.sb.id+'"'+(r.sb.id===C.sid?' selected':'')+'>'+esc(r.sb.alt||r.sb.name)+'</option>'}).join('')+'</select></label>'
+   +'<label>Unit<select id="gc-unit"'+(cur?'':' disabled')+'><option value="">All units</option>'+(cur?cur.list.map(function(x){return'<option value="'+x.u.id+'"'+(x.u.id===C.uid?' selected':'')+'>'+esc(x.u.title)+'</option>'}).join(''):'')+'</select></label></div>'
+   +'<div style="font-size:13px;margin:4px 0 8px">'+(n?'<b>'+n+'</b> bar'+(n===1?'':'s')+' will be removed ('+sc.nu+' unit, '+sc.nt+' topic).':'No dates to clear here.')+'</div>'
+   +'<div class="gt-sa"><button type="button" data-gc-go="1"'+(n?'':' disabled')+(C.ask?' style="background:var(--bad)"':'')+'>'+(C.ask?'Yes, clear '+n+' bar'+(n===1?'':'s'):'Clear '+(n||'')+' dates')+'</button><button type="button" class="ghost" data-gc-cancel="1">Cancel</button></div></div>';
+}
 function gtPlanHtml(rows){
   var P=gtPlan,subs=rows.filter(function(r){return r.k==='s'});
   if(!subs.some(function(r){return r.sb.id===P.sid}))P.sid=subs[0].sb.id;
@@ -3646,17 +3764,26 @@ function gtPlanCalc(P,rows){
   return{items:items};
 }
 $('#gt').addEventListener('change',function(e){
+  if(gtClr&&e.target.id&&e.target.id.indexOf('gc-')===0){gtClr.sid=($('#gc-sub')||{}).value||'';gtClr.uid=e.target.id==='gc-unit'?(($('#gc-unit')||{}).value||''):'';gtClr.ask=false;renderGantt();var f=$('#'+e.target.id);if(f)f.focus();return}
   if(!gtPlan||!e.target.closest||!e.target.closest('.gt-plan'))return;
   gtPlanRead();gtPlan.prev=null;gtPlan.err='';if(e.target.id==='gp-sub')gtPlan.uid='';renderGantt();
 });
 $('#gt').addEventListener('click',function(e){
   var t=e.target,b;
+  if((b=t.closest('[data-gt-size]'))){gtSize=b.dataset.gtSize;gtUiSave();renderGantt();return}
+  if(t.closest('[data-gt-clr]')){if(gtClr){gtClr=null}else{gtEdit=null;gtPlan=null;gtClr={sid:'',uid:'',ask:false}}renderGantt();return}
+  if(t.closest('[data-gc-cancel]')){gtClr=null;renderGantt();return}
+  if(t.closest('[data-gc-go]')&&gtClr){
+    var scp=gtClrScope(gtModel());if(!scp.ch.length)return;
+    if(!gtClr.ask){gtClr.ask=true;renderGantt();return}
+    gtClr=null;gtCommitMany(scp.ch,'Cleared '+scp.ch.length+' date bar'+(scp.ch.length===1?'':'s'));renderGantt();return;
+  }
   if(t.closest('[data-gt-plan]')){
     if(gtPlan){gtPlan=null;renderGantt();return}
     var td=gtDn(today()),dl=td+28,nx=null;
     (S.exams||[]).forEach(function(x){if(x&&!x.deleted&&GT_RE.test(x.date||'')){var n=gtDn(x.date);if(n>td&&(nx===null||n<nx))nx=n}});
     if(nx!==null)dl=nx-1;
-    gtEdit=null;gtPlan={sid:'',uid:'',s:gtYmd(td),e:gtYmd(dl),w:false,k:true,skip:{},prev:null,err:''};renderGantt();return;
+    gtEdit=null;gtClr=null;gtPlan={sid:'',uid:'',s:gtYmd(td),e:gtYmd(dl),w:false,k:true,skip:{},prev:null,err:''};renderGantt();return;
   }
   if(!gtPlan){
     if(t.closest('[data-gt-late]')){
@@ -4999,6 +5126,16 @@ function show(v){
   var T={tasks:'Tasks',exams:'Exam deadlines',graph:'Analytics',subj:'Settings',rev:'Mastery'};$('h1').hidden=!T[v];if(T[v])$('h1').textContent=T[v];$('main').style.padding=v==='cal'?'6px 12px 0':'';document.body.style.paddingBottom=v==='cal'?'0':'';window.scrollTo(0,0);if(v==='cal'){fitTl();scrollTl()}if(v==='log'){fitHome();dawnReplay()}
 }
 document.querySelectorAll('nav button').forEach(function(b){b.onclick=function(){show(b.dataset.v);if(b.dataset.v==='tasks')sylRestoreScroll()}});
+/* Planner full screen: tuck the sidebar in/out (device-only, own key) */
+var GT_NAV_KEY='bcs-gt-nav';
+function gtNavHidden(){try{return localStorage.getItem(GT_NAV_KEY)==='1'}catch(e){return false}}
+function gtNavSync(){
+  var v=$('#v-tasks'),g=$('#tk-gantt'),on=!!v&&!v.hidden&&!!g&&!g.hidden&&window.innerWidth>=1200,hide=on&&gtNavHidden(),b=$('#gt-navtog');
+  document.body.classList.toggle('gt-navmode',on);document.body.classList.toggle('gt-navhide',hide);
+  if(b){b.textContent=hide?'\u203a':'\u2039';b.setAttribute('aria-expanded',hide?'false':'true');b.setAttribute('aria-label',hide?'Show sidebar':'Hide sidebar');b.title=hide?'Show sidebar':'Hide sidebar for a full-screen Planner'}
+}
+$('#gt-navtog').onclick=function(){try{localStorage.setItem(GT_NAV_KEY,gtNavHidden()?'0':'1')}catch(e){}gtNavSync();setTimeout(function(){if(typeof renderGantt==='function'&&!$('#tk-gantt').hidden)renderGantt()},230)};
+(function(){var _s=show,_t=tkSub;show=function(v){_s(v);gtNavSync()};tkSub=function(m){_t(m);gtNavSync()};window.addEventListener('resize',gtNavSync)})();
 
 document.querySelectorAll('[data-q]').forEach(function(b){b.onclick=function(){var q=parseInt(b.dataset.q,10);$('#l-h').value=Math.floor(q/60)||'';$('#l-m').value=q%60||''}});
 $('#l-add').onclick=function(){
