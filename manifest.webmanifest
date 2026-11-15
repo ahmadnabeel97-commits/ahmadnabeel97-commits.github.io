@@ -1,10 +1,10 @@
 {
-  "id": "./",
+  "id": "/studytrack/",
   "name": "StudyTrack",
   "short_name": "StudyTrack",
   "description": "Plan, focus and track your BCS study.",
-  "start_url": "./",
-  "scope": "./",
+  "start_url": "/studytrack/",
+  "scope": "/studytrack/",
   "display": "standalone",
   "background_color": "#eef0fb",
   "theme_color": "#4f3fd6",
