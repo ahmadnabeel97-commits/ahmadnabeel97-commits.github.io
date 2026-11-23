@@ -1135,6 +1135,7 @@ nav button[aria-current=true]{background:var(--c3)!important;color:var(--accent)
 .pcard small{display:block;color:var(--mute);font-size:12px;margin-top:2px}
 .pcard.pdim{opacity:.45;border-style:dashed}
 .pcard.planned{cursor:default;opacity:.6;border-style:dashed}
+.pc-n{display:inline-block;margin-left:6px;padding:0 6px;border-radius:9px;background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent);font-size:11px;font-weight:700;vertical-align:1px}
 #v-cal:not(.ctasks) #c-tasks{display:none}
 #v-cal.ctasks #c-split,#v-cal.ctasks #c-untimed,#v-cal.ctasks #c-sel,#v-cal.ctasks #c-info,#v-cal.ctasks #c-tools2{display:none!important}
 .pc-hint{margin-top:auto;text-align:center;color:var(--mute);font-size:12px;padding-top:6px}
@@ -1969,7 +1970,7 @@ $('#d-save').onclick=function(){
     var pt=getT('d');if(pt===null){msg.style.color='var(--bad)';msg.textContent='Choose a start time for the plan.';return}
     var P={id:dp&&dp.mode==='edit'?dp.id:uid(),date:cSel,startMin:pt,min:Math.min(min,1440),subj:$('#d-subj').value,note:$('#d-n').value.trim()};
     if(sugSel.d&&$('#d-n').value===sugSel.d.t)P.tp=sugSel.d.k;sugSel.d=null;
-    var oldp=dp&&dp.mode==='edit'?planById(P.id):null;if(oldp&&oldp.taskId)P.taskId=oldp.taskId;
+    var oldp=dp&&dp.mode==='edit'?planById(P.id):null;if(oldp&&oldp.taskId)P.taskId=oldp.taskId;if(oldp&&oldp.fromTask)P.fromTask=oldp.fromTask;
     if(dp&&dp.mode==='edit')S.plans=S.plans.map(function(x){return x.id===P.id?P:x});else S.plans.push(P);
     lkPush(P);
     infoId=null;infoConfirm=false;save();closeDlg();draft=null;render();return;
@@ -2111,14 +2112,14 @@ function renderCalPanel(){
   var wk=cMode==='week',lo=cSel,hi=cSel;
   if(wk){var w0=new Date(cSel+'T00:00:00');w0.setDate(w0.getDate()-w0.getDay());lo=ymd(w0);w0.setDate(w0.getDate()+6);hi=ymd(w0)}
   var list=S.tasks.filter(function(k){return k.dueDate>=lo&&k.dueDate<=hi&&!k.deleted&&k.status!=='completed'}).map(function(k){return{k:k,lp:tkPlanOf(k)}});
-  list.sort(function(a,b){return(!!a.lp-!!b.lp)||(wk?String(a.k.dueDate).localeCompare(String(b.k.dueDate)):0)||((a.k.priority==='high'?0:1)-(b.k.priority==='high'?0:1))||String(a.k.dueTime||'').localeCompare(String(b.k.dueTime||''))});
+  list.sort(function(a,b){return(wk?String(a.k.dueDate).localeCompare(String(b.k.dueDate)):0)||((a.k.priority==='high'?0:1)-(b.k.priority==='high'?0:1))||String(a.k.dueTime||'').localeCompare(String(b.k.dueTime||''))});
   var ttl=wk?'This week\u2019s tasks':cSel===today()?'Today\u2019s tasks':new Date(cSel+'T00:00:00').toLocaleDateString(undefined,{day:'numeric',month:'short'})+' tasks';
   var touch=window.matchMedia&&matchMedia('(pointer:coarse)').matches,free=0,h='<div class="pc-h"><b>'+esc(ttl)+'</b><small>'+list.length+' left</small></div>';
   if(!list.length)h+='<div class="pc-hint">No tasks due on this day.</div>';
   list.forEach(function(x){
     var k=x.k,sn=sname(k.subjectId),dl=wk?new Date(k.dueDate+'T00:00:00').toLocaleDateString(undefined,{weekday:'short',day:'numeric'})+' \u00B7 ':'';
-    if(x.lp)h+='<div class="pcard planned"><b>'+esc(k.title)+'</b><small>'+dl+esc(sn)+' \u00B7 '+tl12(x.lp.startMin)+' \u00B7 '+fmt(x.lp.min)+'</small></div>';
-    else{free++;h+='<div class="pcard" data-pt="'+k.id+'"><b>'+esc(k.title)+'</b><small>'+dl+esc(sn)+' \u00B7 '+fmt(cpMin(k))+'</small></div>'}
+    var nc=S.plans.filter(function(p){return(p.fromTask===k.id||p.taskId===k.id)&&p.date>=lo&&p.date<=hi}).length;
+    free++;h+='<div class="pcard" data-pt="'+k.id+'" title="Drag onto the timeline to add a copy"><b>'+esc(k.title)+(nc?'<span class="pc-n">\u00D7'+nc+'</span>':'')+'</b><small>'+dl+esc(sn)+' \u00B7 '+fmt(cpMin(k))+'</small></div>';
   });
   h+='<div class="pc-hint"><button type="button" class="ghost" data-cal-add="1" style="width:100%;min-height:36px">+ Add task</button></div>';
   pin.innerHTML=h;
@@ -2144,7 +2145,7 @@ function cpPreview(s,h){
   el.style.top=(s*PPM)+'px';el.style.height=Math.max(h.dur*PPM,20)+'px';
   if(h.ci>=0){el.style.left='calc(56px + (100% - 56px) * '+(h.ci/7)+' + 1px)';el.style.right='auto';el.style.width='calc((100% - 56px) / 7 - 2px)';el.style.padding='2px 4px'}
   else{el.style.left='';el.style.right='';el.style.width='';el.style.padding=''}
-  el.textContent='Drop here \u00B7 '+tl12(s)+' \u2013 '+tl12(s+h.dur);
+  el.textContent='Copy here \u00B7 '+tl12(s)+' \u2013 '+tl12(s+h.dur);
 }
 function cpMove(){
   var h=cpHold;if(!h||!h.active)return;
@@ -2176,16 +2177,13 @@ function cpEnd(drop){
   if(s!==null)cpDrop(h.id,s,h.date);
 }
 function cpDrop(id,sm,dt){
+  /* Copy, not move: the task is left exactly as it is; each drop adds an independent session (no taskId, so lkReconcile never snaps it back). */
   dt=dt||cSel;
   var k=S.tasks.find(function(x){return x.id===id&&!x.deleted});if(!k||k.status==='completed')return;
   var mn=Math.max(1,Math.min(cpMin(k),1440-sm));
-  var r=tkUpdate(S,k,{dueDate:dt,dueTime:pad(Math.floor(sm/60))+':'+pad(sm%60)},Date.now());
-  if(!r.ok){toast(r.error);return}
-  var lp=tkPlanOf(k);
-  if(lp){lp.date=dt;lp.startMin=sm;lp.min=mn}
-  else{lp={id:uid(),date:dt,startMin:sm,min:mn,subj:k.subjectId||null,note:k.title,taskId:k.id};S.plans.push(lp)}
+  S.plans.push({id:uid(),date:dt,startMin:sm,min:mn,subj:k.subjectId||null,note:k.title,fromTask:k.id});
   cSel=dt;infoId=null;plPick=null;infoConfirm=false;draft=null;
-  save();render();toast('Planned for '+(cMode==='week'?new Date(dt+'T00:00:00').toLocaleDateString(undefined,{weekday:'short'})+', ':'')+tl12(sm));
+  save();render();toast('Copied to '+(cMode==='week'?new Date(dt+'T00:00:00').toLocaleDateString(undefined,{weekday:'short'})+', ':'')+tl12(sm)+' \u00B7 '+fmt(mn));
 }
 $('#c-pin').addEventListener('contextmenu',function(e){if(e.target.closest('[data-pt]'))e.preventDefault()});
 $('#c-pin').addEventListener('pointerdown',function(e){
