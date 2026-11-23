@@ -1486,6 +1486,19 @@ window.FB_CONFIG={
   <button class="ghost" data-go="exams" style="width:100%;margin-bottom:4px">Exam deadlines</button>
   <h2>Weekly study goal</h2>
   <div class="card"><label for="goal">Hours per week</label><input id="goal" type="number" inputmode="decimal" min="1" max="100" placeholder="10"></div>
+  <h2>Alerts</h2>
+  <div class="card" id="al-card">
+    <div id="al-st" style="font-size:13px;color:var(--mute)"></div>
+    <button class="ghost" id="al-en" style="margin-top:8px;width:100%">Enable notifications</button>
+    <label for="al-snd">Alert sound</label><select id="al-snd"></select>
+    <label for="al-vol">Volume <span id="al-vv"></span></label><input id="al-vol" type="range" min="10" max="100" step="5" style="width:100%">
+    <label for="al-rep">Repeat</label><select id="al-rep"><option value="1">Once</option><option value="3">3 times</option><option value="5">5 times</option></select>
+    <label for="al-file">Your own sound (mp3, wav, m4a, up to 1 MB)</label><input id="al-file" type="file" accept="audio/*">
+    <div class="row" style="margin-top:8px"><button class="ghost" id="al-clr" hidden>Remove my sound</button></div>
+    <label style="display:flex;align-items:center;gap:8px;margin-top:12px"><input id="al-vib" type="checkbox" style="width:auto;margin:0"> Vibrate on phone</label>
+    <button id="al-test" style="margin-top:10px;width:100%">Test alert</button>
+    <div class="msg" id="al-msg"></div>
+  </div>
   <h2>Photos</h2>
   <div class="card"><label for="bn-file">Home banner photo</label><input id="bn-file" type="file" accept="image/*"><button class="ghost" id="bn-clear" style="margin-top:8px">Remove photo</button><div class="msg" id="bn-msg"></div></div>
   <div class="card"><label for="qt-file">Quote card photo</label><input id="qt-file" type="file" accept="image/*"><button class="ghost" id="qt-clear" style="margin-top:8px">Remove photo</button></div>
@@ -2690,7 +2703,7 @@ function tmDraw(){
   var li=$('#t-len');li.disabled=started;if(document.activeElement!==li)li.value=Math.round(tm.pl/60);
   document.title=tm.run?s.txt+' · StudyTrack':tmBase;
 }
-function tmTick(){tmDraw();var tg=tmTarget();if(tg&&!tm.chimed&&tmEl()>=tg*1000){tm.chimed=true;tmChime()}}
+function tmTick(){tmDraw();var tg=tmTarget();if(tg&&!tm.chimed&&tmEl()>=tg*1000){tm.chimed=true;tmChime();tmNotify(false)}}
 function tmRun(){clearInterval(tm.iv);tm.iv=setInterval(tmTick,250)}
 function tmStop(){if(tm.run){tm.acc+=Date.now()-tm.t0;tm.run=false}clearInterval(tm.iv);tm.iv=null}
 function tmConfirmDiscard(){var m=Math.round(tmEl()/60000);return tm.brk||m<1||confirm('Discard this study session ('+m+' min)? Press Cancel, then use "Finish and log" to save it.')}
@@ -2704,7 +2717,65 @@ function planStart(id){
   tm.run=true;tm.t0=Date.now();tmRun();tmSave();tmDraw();tmPrepareAudio();show('log');tmFromCal=false;return true;
 }
 var tmAudio=null;function tmPrepareAudio(){try{var AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;if(!tmAudio)tmAudio=new AC();if(tmAudio.state==='suspended')tmAudio.resume()}catch(e){}}
-function tmChime(){try{var AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;if(!tmAudio)tmAudio=new AC();var ctx=tmAudio;function play(){var now=ctx.currentTime;[0,.28,.56].forEach(function(offset,i){var osc=ctx.createOscillator(),gain=ctx.createGain();osc.type='sine';osc.frequency.value=[660,784,988][i];gain.gain.setValueAtTime(.0001,now+offset);gain.gain.exponentialRampToValueAtTime(.16,now+offset+.025);gain.gain.exponentialRampToValueAtTime(.0001,now+offset+.22);osc.connect(gain);gain.connect(ctx.destination);osc.start(now+offset);osc.stop(now+offset+.24)})}if(ctx.state==='suspended')ctx.resume().then(play).catch(function(){});else play()}catch(e){}}
+var AL_KEY='bcs-alert',AL_CUS='bcs-alert-sound',alCbuf=null;
+var AL_SND={
+  chime:{n:'Chime',t:'sine',g:.6,len:1.2,nt:[[660,0,.3],[784,.28,.3],[988,.56,.55]]},
+  bell:{n:'Bell',t:'sine',g:.55,h:2.76,len:2.4,nt:[[880,0,1.6],[880,1.1,1.2]]},
+  marimba:{n:'Marimba',t:'triangle',g:.8,len:1.4,nt:[[523,0,.35],[659,.2,.35],[784,.4,.35],[1047,.6,.6]]},
+  rise:{n:'Rising',t:'triangle',g:.7,len:1.6,nt:[[392,0,.3],[494,.18,.3],[587,.36,.3],[740,.54,.3],[988,.72,.7]]},
+  drop:{n:'Soft drop',t:'sine',g:.65,len:1.1,nt:[[784,0,.4],[587,.25,.65]]},
+  alarm:{n:'Alarm (loud)',t:'square',g:.3,len:1.5,nt:[[880,0,.14],[880,.2,.14],[880,.4,.14],[880,.6,.14],[1175,.9,.4]]}
+};
+function alGet(){var a={on:false,vol:80,snd:'chime',rep:3,vib:true};try{var d=JSON.parse(localStorage.getItem(AL_KEY)||'null');if(d&&typeof d==='object'){if(d.on===true)a.on=true;var v=Number(d.vol);if(v>=10&&v<=100)a.vol=v;if(d.snd==='custom'||AL_SND[d.snd])a.snd=d.snd;var r=Number(d.rep);if(r===1||r===3||r===5)a.rep=r;if(d.vib===false)a.vib=false}}catch(e){}return a}
+function alSave(a){try{localStorage.setItem(AL_KEY,JSON.stringify(a))}catch(e){}}
+function alCustom(){try{var c=JSON.parse(localStorage.getItem(AL_CUS)||'null');return c&&c.data?c:null}catch(e){return null}}
+function alSynth(ctx,def,vol,at){def.nt.forEach(function(n){var peak=Math.max(.0002,def.g*vol),s=at+n[1],d=n[2];
+  function tone(f,pk){var o=ctx.createOscillator(),g=ctx.createGain();o.type=def.t;o.frequency.value=f;g.gain.setValueAtTime(.0001,s);g.gain.exponentialRampToValueAtTime(pk,s+.02);g.gain.exponentialRampToValueAtTime(.0001,s+d);o.connect(g);g.connect(ctx.destination);o.start(s);o.stop(s+d+.05)}
+  tone(n[0],peak);if(def.h)tone(n[0]*def.h,peak*.35)})}
+function alCustomBuf(ctx,cb){if(alCbuf)return cb(alCbuf);var c=alCustom();if(!c)return cb(null);
+  try{fetch(c.data).then(function(r){return r.arrayBuffer()}).then(function(ab){ctx.decodeAudioData(ab,function(b){alCbuf=b;cb(b)},function(){cb(null)})}).catch(function(){cb(null)})}catch(e){cb(null)}}
+function alRing(test){try{var AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;if(!tmAudio)tmAudio=new AC();var ctx=tmAudio,a=alGet(),vol=a.vol/100,rep=test?1:a.rep;
+  function play(){if(a.snd==='custom'){alCustomBuf(ctx,function(b){if(!b){playSynth('chime');return}var dur=Math.min(b.duration,15),t=ctx.currentTime+.05;for(var i=0;i<rep;i++){var src=ctx.createBufferSource(),g=ctx.createGain();src.buffer=b;g.gain.value=vol;src.connect(g);g.connect(ctx.destination);src.start(t,0,dur);t+=dur+.3}})}else playSynth(a.snd)}
+  function playSynth(k){var def=AL_SND[k]||AL_SND.chime,t=ctx.currentTime+.05;for(var i=0;i<rep;i++){alSynth(ctx,def,vol,t);t+=def.len+.3}}
+  if(ctx.state==='suspended')ctx.resume().then(play).catch(function(){});else play();
+  if(a.vib&&navigator.vibrate){try{navigator.vibrate([400,150,400,150,800])}catch(e){}}
+}catch(e){}}
+function tmChime(){alRing(false)}
+function tmNotify(test){try{var a=alGet();if(!a.on||!('Notification' in window)||Notification.permission!=='granted')return;
+  var title=test?'StudyTrack test':tm.brk?'Break is over':tm.plan?'Planned session complete':'Focus session complete';
+  var body=test?'Alerts are working.':tm.brk?'Time to get back to studying.':Math.round(tm.pl/60)+' min done. Tap to log it.';
+  var o={body:body,tag:'studytrack-timer',renotify:true,requireInteraction:true,icon:'icon-192.png',badge:'icon-192.png',vibrate:[400,150,400,150,800]};
+  function fb(){try{new Notification(title,o)}catch(e){}}
+  if(navigator.serviceWorker&&navigator.serviceWorker.ready){navigator.serviceWorker.ready.then(function(r){return r.showNotification(title,o)}).catch(fb)}else fb();
+}catch(e){}}
+(function alInit(){var card=$('#al-card');if(!card)return;
+  function ui(){var a=alGet(),c=alCustom(),sel=$('#al-snd');
+    sel.innerHTML=Object.keys(AL_SND).map(function(k){return '<option value="'+k+'">'+AL_SND[k].n+'</option>'}).join('')+(c?'<option value="custom">My sound: '+String(c.name||'file').replace(/[<>&"]/g,'')+'</option>':'');
+    sel.value=(a.snd==='custom'&&!c)?'chime':a.snd;
+    $('#al-vol').value=a.vol;$('#al-vv').textContent=a.vol+'%';$('#al-rep').value=String(a.rep);$('#al-vib').checked=a.vib;$('#al-clr').hidden=!c;
+    var st,en=$('#al-en'),sup='Notification' in window;
+    if(!sup){st='Notifications are not available here. On iPhone, add StudyTrack to the Home Screen and open it from there. Sound still works.';en.disabled=true}
+    else if(Notification.permission==='denied'){st='Notifications are blocked. Allow them for StudyTrack in your phone settings. Sound still works.';en.disabled=true}
+    else if(a.on&&Notification.permission==='granted'){st='Notifications are on. You get a notification when the timer ends.';en.textContent='Turn notifications off'}
+    else{st='Notifications are off. Sound still plays while the app is open.';en.textContent='Enable notifications'}
+    $('#al-st').textContent=st}
+  function msg(t){$('#al-msg').textContent=t}
+  $('#al-en').onclick=function(){var a=alGet();
+    if(a.on&&Notification.permission==='granted'){a.on=false;alSave(a);ui();return}
+    Notification.requestPermission().then(function(p){a.on=(p==='granted');alSave(a);ui();if(p==='granted'){tmNotify(true);msg('Test notification sent.')}}).catch(function(){ui()})};
+  $('#al-snd').onchange=function(){var a=alGet();a.snd=this.value;alSave(a)};
+  $('#al-vol').oninput=function(){var a=alGet();a.vol=Number(this.value);alSave(a);$('#al-vv').textContent=a.vol+'%'};
+  $('#al-rep').onchange=function(){var a=alGet();a.rep=Number(this.value);alSave(a)};
+  $('#al-vib').onchange=function(){var a=alGet();a.vib=this.checked;alSave(a)};
+  $('#al-test').onclick=function(){tmPrepareAudio();alRing(true);tmNotify(true);msg('')};
+  $('#al-file').onchange=function(){var f=this.files&&this.files[0];this.value='';if(!f)return;
+    if(f.size>1048576){msg('That file is over 1 MB. Choose a shorter sound.');return}
+    var r=new FileReader();r.onload=function(){try{localStorage.setItem(AL_CUS,JSON.stringify({name:f.name,data:r.result}))}catch(e){msg('Could not save the file on this device.');return}
+      alCbuf=null;var a=alGet();a.snd='custom';alSave(a);ui();msg('Sound saved on this device. Press Test alert.')};
+    r.onerror=function(){msg('Could not read that file.')};r.readAsDataURL(f)};
+  $('#al-clr').onclick=function(){try{localStorage.removeItem(AL_CUS)}catch(e){}alCbuf=null;var a=alGet();if(a.snd==='custom'){a.snd='chime';alSave(a)}ui();msg('')};
+  ui();document.addEventListener('visibilitychange',function(){if(!document.hidden)ui()});
+})();
 $('#t-go').onclick=function(){
   tmPrepareAudio();
   if(tm.run){tmStop();tmSave();tmDraw();return}
