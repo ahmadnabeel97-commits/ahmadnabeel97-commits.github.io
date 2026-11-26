@@ -844,6 +844,12 @@ nav button[aria-current=true]{background:var(--c3)!important;color:var(--accent)
 .timer .topt button:disabled,.timer .topt input:disabled{opacity:.45;cursor:default}
 .timer .topt input{width:60px;min-height:30px;padding:0 6px;margin:0;text-align:center;font-size:12px;color:#fff;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:22px}
 .timer .topt span{font-size:12px;opacity:.85}
+.timer .tfor{position:relative;width:100%;max-width:340px}.timer .tfor-r{display:flex;flex-direction:row;align-items:center;gap:5px}.timer .tfor input{flex:1 1 auto;min-width:0;width:auto;min-height:30px;margin:0;padding:0 10px;font-size:12px;color:#fff;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:22px;box-sizing:border-box;text-align:left}.timer .tfor input::placeholder{color:rgba(255,255,255,.7)}.timer .tfor input:disabled{opacity:.45}.timer .tfor .sug{position:absolute;left:0;right:0;top:100%;z-index:20;color:var(--ink);text-align:left}.timer .tfor .sug .sg b{color:var(--ink)}.timer .tfor[hidden]{display:none}
+#tm-s{display:none!important}.timer .tfor .tsb{flex:0 0 auto;display:flex;align-items:center;justify-content:center;gap:5px;max-width:42%;min-height:30px;margin:0;padding:0 11px;font-size:12px;font-weight:700;color:#fff;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:22px;cursor:pointer}.timer .tfor .tsb[aria-pressed=true]{background:rgba(255,255,255,.34);border-color:rgba(255,255,255,.7)}.timer .tfor .tsb .tsl{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.timer .tfor .tsb i{flex:none;font-style:normal;font-size:10px;opacity:.85}
+body #v-log>.timer .topt .tfor input{flex:1 1 0;width:auto;min-width:0;min-height:28px;font-size:11.5px;padding:0 10px}body #v-log>.timer .topt .tfor .tsb{min-height:28px;font-size:11px;padding:0 9px}
+#tm-sug{position:fixed;z-index:80;margin:0;color:var(--ink);text-align:left;border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,.35)}#tm-sug[hidden]{display:none}#tm-sug .sg b{color:var(--ink)}
+#tm-sp{position:fixed;z-index:80;width:min(280px,calc(100vw - 24px));max-height:260px;overflow:auto;padding:6px;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,.35)}#tm-sp[hidden]{display:none}#tm-sp button{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;min-height:38px;padding:6px 10px;margin:0;text-align:left;font-size:13px;font-weight:600;color:var(--ink);background:transparent;border:0;border-radius:10px;cursor:pointer}#tm-sp button:hover{background:var(--c3)}#tm-sp button[aria-pressed=true]{background:var(--c3);color:var(--accent)}#tm-sp button[aria-pressed=true]::after{content:"\2713"}#tm-sp small{display:block;padding:8px 10px;color:var(--mute);font-size:12.5px}
+.tqs.tmr{padding:0 8px}.pcard{position:relative}.pcard>b{padding-right:30px}.pc-t{position:absolute;top:6px;right:6px;width:26px;height:26px;min-height:0;padding:0;border-radius:13px;background:color-mix(in srgb,var(--accent) 14%,transparent);color:var(--accent);border:0;font-size:11px;line-height:26px;cursor:pointer}
 .tclock.ot{color:#ffc2b0}
 /* Scheduler: planned blocks, mode toggle */
 .tl .blk.plan{box-sizing:border-box;border:2px dashed var(--pc);background:color-mix(in srgb,var(--pc) 14%,var(--surface));color:var(--ink);cursor:pointer}
@@ -900,6 +906,128 @@ nav button[aria-current=true]{background:var(--c3)!important;color:var(--accent)
   box-shadow:inset 0 1px 0 rgba(255,255,255,.75),inset 0 -10px 16px rgba(255,255,255,.08),0 6px 16px rgba(15,12,60,.28);
   text-shadow:0 1px 2px rgba(15,12,60,.35)}
 .timer #h-log2::before{content:"";position:absolute;inset:0 0 50% 0;border-radius:inherit;background:linear-gradient(180deg,rgba(255,255,255,.38),rgba(255,255,255,0));pointer-events:none}
+/* Timer redesign (Nov 26): dark glass cards. Classes xm-*; every timer id is unchanged. */
+.tmx{display:flex!important;flex-direction:column;align-items:stretch!important;justify-content:flex-start!important;gap:12px!important;width:100%!important;min-width:0;padding:0!important;background:none!important;border:0!important;box-shadow:none!important;color:#fff!important;text-align:left!important;overflow:visible}
+.tmx .xm-main,.tmx .xm-tools{container-type:inline-size;width:100%;box-sizing:border-box;border-radius:24px;border:1px solid rgba(160,130,255,.28);background:radial-gradient(120% 80% at 90% 105%,rgba(124,92,255,.24),transparent 60%),linear-gradient(165deg,#261b68,#150f45 72%);box-shadow:0 12px 30px rgba(10,6,40,.35),inset 0 1px 0 rgba(255,255,255,.06);color:#fff}
+.tmx .xm-main{padding:16px 18px 18px}
+.tmx svg{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.tmx .xm-hd{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.tmx .xm-bk{width:38px;height:38px;color:#a893ff;fill:#a893ff;stroke:none}.tmx .xm-bk{fill:none;stroke:#a893ff;stroke-width:1.9}
+.tmx .xm-title{font-size:22px;font-weight:800;letter-spacing:.2px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tmx .xm-st{margin-left:auto;display:inline-flex;align-items:center;gap:8px;padding:7px 16px;border-radius:20px;background:rgba(255,255,255,.07);border:1px solid rgba(160,130,255,.3);font-size:15px;font-weight:700;white-space:nowrap}
+.tmx .xm-st i{width:10px;height:10px;border-radius:50%;background:#3ddc84;box-shadow:0 0 8px #3ddc84}.tmx .xm-st b{color:#5df0a0;font-weight:700}
+.tmx .xm-st[data-s=run] i{background:#9d86ff;box-shadow:0 0 10px #9d86ff;animation:xmDot 1.4s ease-in-out infinite}.tmx .xm-st[data-s=run] b{color:#d7cdff}
+.tmx .xm-st[data-s=pause] i{background:#ffc15a;box-shadow:0 0 8px #ffc15a}.tmx .xm-st[data-s=pause] b{color:#ffd990}
+.tmx .xm-st[data-s=brk] i{background:#4fd8e0;box-shadow:0 0 8px #4fd8e0}.tmx .xm-st[data-s=brk] b{color:#9cecf0}
+@keyframes xmDot{50%{opacity:.35}}
+.tmx .xm-ic{flex:none;width:40px;height:40px;padding:0;display:grid;place-items:center;background:none;border:0;color:#a893ff;box-shadow:none;border-radius:12px}.tmx .xm-ic svg{width:28px;height:28px}.tmx .xm-ic:hover{background:rgba(255,255,255,.08)}
+.tmx .xm-mid{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:14px;margin:6px 0 16px}
+.tmx .xm-modes{display:flex;flex-direction:column;gap:2px;padding:3px;width:100%;max-width:170px;justify-self:start;border-radius:18px;background:rgba(255,255,255,.06);border:1px solid rgba(160,130,255,.3)}
+.tmx .xm-modes button{min-height:44px;border:0;border-radius:15px;background:transparent;color:#c7bcff;font-size:15px;font-weight:700;box-shadow:none}
+.tmx .xm-modes button[aria-pressed=true]{background:linear-gradient(180deg,#7c5cff,#5a3df0);color:#fff;box-shadow:0 4px 14px rgba(110,80,255,.45)}
+.tmx .xm-modes button:disabled{opacity:.55}
+.tmx .xm-ring{position:relative;width:230px;height:230px}.tmx .xm-ring>svg{position:absolute;inset:0;width:100%;height:100%}
+.tmx .xm-bg{stroke:rgba(160,130,255,.28);stroke-width:10}
+.tmx .xm-fg{stroke:url(#xmg);stroke-width:10;stroke-dasharray:553 553;filter:drop-shadow(0 0 7px rgba(140,100,255,.75));transition:stroke-dasharray .3s linear}
+.tmx .xm-dot{fill:#fff;stroke:none;filter:drop-shadow(0 0 6px #b79cff)}
+.tmx .is-run .xm-fg{animation:xmGlow 2.4s ease-in-out infinite}@keyframes xmGlow{50%{filter:drop-shadow(0 0 13px rgba(150,115,255,.95))}}
+.tmx .xm-in{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+.tmx .xm-tom{width:34px;height:34px;color:#8f73ff;stroke:#8f73ff;fill:rgba(143,115,255,.35)}.tmx.is-brk .xm-tom{opacity:0}
+.tmx .xm-clock{font-size:54px;font-weight:800;line-height:1.05;letter-spacing:1px;font-variant-numeric:tabular-nums;color:#fff;margin:0}.tmx .xm-clock.ot{color:#ff9db0}
+.tmx .xm-lbl{font-size:15px;font-weight:700;letter-spacing:.2em;color:#a99bff}
+.tmx .xm-len{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;max-width:200px;justify-self:end}.tmx .xm-len[hidden]{display:none}
+.tmx .xm-len>button{min-height:46px;border-radius:16px;background:rgba(255,255,255,.06);border:1px solid rgba(160,130,255,.3);color:#e6e0ff;font-size:15px;font-weight:700;box-shadow:none;padding:0 4px}
+.tmx .xm-len>button[aria-pressed=true]{background:linear-gradient(180deg,#7c5cff,#5a3df0);color:#fff;border-color:rgba(255,255,255,.25);box-shadow:0 4px 14px rgba(110,80,255,.45)}
+.tmx .xm-len>button:disabled{opacity:.55}
+.tmx .xm-cu{grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap}
+.tmx .xm-cu>button{background:none;border:0;box-shadow:none;color:#a99bff;font-size:13px;font-weight:700;min-height:28px;padding:0 8px;text-decoration:underline}.tmx .xm-cu>button[aria-pressed=true]{color:#fff}.tmx .xm-cu>button:disabled{opacity:.5}
+.tmx .xm-cu>span{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#c7bcff}.tmx .xm-cu>span[hidden]{display:none}
+.tmx .xm-cu input{width:64px;min-height:34px;padding:0 8px;text-align:center;font-size:14px;color:#fff;background:rgba(255,255,255,.08);border:1px solid rgba(160,130,255,.4);border-radius:14px;margin:0}
+.tmx .xm-act{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}.tmx .xm-act [hidden]{display:none!important}
+.tmx .xm-go{flex:1 1 0;max-width:460px;min-width:0;min-height:58px;display:flex;align-items:center;justify-content:center;gap:12px;border-radius:30px;border:1px solid rgba(255,255,255,.22);background:linear-gradient(180deg,#7f60ff,#5436e8);color:#fff;font-size:20px;font-weight:800;box-shadow:0 8px 24px rgba(100,70,255,.5);padding:0 20px}
+.tmx .xm-lb{color:#fff;background:none;padding:0;margin:0;font-size:inherit;font-weight:800;line-height:1;white-space:nowrap}
+.tmx .xm-go svg{flex:none;width:24px;height:24px;fill:currentColor;stroke:none}.tmx .xm-go .xm-pa{display:none}.tmx.is-run .xm-go .xm-pl{display:none}.tmx.is-run .xm-go .xm-pa{display:block}
+.tmx .xm-rs{flex:none;width:58px;height:58px;padding:0;display:grid;place-items:center;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid rgba(160,130,255,.35);color:#a893ff;box-shadow:none}.tmx .xm-rs svg{width:26px;height:26px}
+.tmx .xm-fin{min-height:46px;padding:0 18px;border-radius:23px;background:rgba(255,255,255,.08);border:1px solid rgba(160,130,255,.4);color:#fff;font-size:15px;font-weight:700;box-shadow:none}
+.tmx .xm-fields{display:flex;flex-direction:column;gap:10px;border-top:1px solid rgba(160,130,255,.2);padding-top:14px;position:relative}.tmx .xm-fields[hidden]{display:none}
+.tmx .xm-field{position:relative;display:flex;align-items:center;gap:14px;width:100%;min-height:60px;padding:8px 16px;border-radius:20px;border:1px solid rgba(160,130,255,.3);background:rgba(255,255,255,.04);color:#fff;text-align:left;box-shadow:none;margin:0}
+.tmx .xm-field>svg{flex:none;width:26px;height:26px;color:#a893ff}.tmx .xm-field>.xm-chev{width:22px;height:22px;margin-left:auto}
+.tmx .xm-ft{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:1px}.tmx .xm-ft small{font-size:12.5px;font-weight:600;color:#a99bff}
+.tmx .xm-ft .tsl{display:block;max-width:100%;font-size:17px;font-weight:700;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tmx #tm-sb[aria-pressed=false] .tsl{color:rgba(205,195,255,.6);font-weight:600}
+.tmx .xm-ft input{width:100%;min-height:0;padding:0;margin:0;font-size:16px;color:#fff;background:transparent;border:0;outline:0;box-shadow:none;border-radius:0;text-align:left}.tmx .xm-ft input::placeholder{color:rgba(205,195,255,.5)}.tmx .xm-ft input:disabled{opacity:.5}
+.tmx .xm-topic:focus-within,.tmx #tm-sb:focus-visible{border-color:#8d72ff;box-shadow:0 0 0 3px rgba(124,92,255,.3)}
+.tmx .xm-topic .sug{position:absolute;left:0;right:0;top:calc(100% + 4px);z-index:20;color:var(--ink);text-align:left}.tmx .xm-topic .sug .sg b{color:var(--ink)}
+.tmx .xm-tools{padding:14px 16px 16px}
+.tmx .xm-th{display:flex;align-items:center;gap:10px;margin-bottom:12px;color:#b9a8ff;font-size:17px;font-weight:700}.tmx .xm-th svg{width:24px;height:24px}
+.tmx .xm-tg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.tmx .xm-tools .xm-tb{position:relative;display:flex;align-items:center;gap:10px;min-height:62px;padding:8px 14px;border-radius:18px;background:rgba(255,255,255,.05);border:1px solid rgba(160,130,255,.3);color:#fff;text-align:left;box-shadow:none;text-shadow:none;overflow:hidden;-webkit-backdrop-filter:none;backdrop-filter:none;font-weight:400}
+.tmx .xm-tools .xm-tb::before{content:none!important}
+.tmx .xm-tb svg{flex:none;width:30px;height:30px;color:#a893ff}.tmx .xm-tb b{display:block;font-size:15.5px;font-weight:700;color:#fff}.tmx .xm-tb small{display:block;font-size:13px;color:#a99bff}
+.tmx .xm-tb:hover{background:rgba(255,255,255,.09)}
+@container (max-width:540px){
+ .tmx .xm-main{padding:14px}
+ .tmx .xm-mid{grid-template-columns:1fr;justify-items:center;gap:12px}
+ .tmx .xm-ring{width:200px;height:200px;order:-1}.tmx .xm-clock{font-size:46px}
+ .tmx .xm-modes{flex-direction:row;max-width:none;justify-self:stretch}.tmx .xm-modes button{flex:1}
+ .tmx .xm-len{grid-template-columns:repeat(4,1fr);max-width:none;justify-self:stretch;gap:6px}.tmx .xm-len>button{font-size:13.5px}
+ .tmx .xm-hd{gap:8px}.tmx .xm-bk{width:30px;height:30px}.tmx .xm-title{font-size:17px}.tmx .xm-st{padding:5px 10px;font-size:13px;gap:6px}.tmx .xm-ic{width:34px;height:34px}
+ .tmx .xm-go{font-size:18px;min-height:54px}.tmx .xm-rs{width:54px;height:54px}
+}
+/* Timer v2 layout (Nov 26): length chips on both sides of the ring so Start moves up */
+.tmx .xm-mid{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);grid-template-areas:"a ring c" "b ring d" "modes modes modes" "cus cus cus";align-items:center;justify-items:center;gap:10px 12px;margin:6px 0 14px}
+.tmx .xm-ring{grid-area:ring;order:0;width:220px;height:220px}
+.tmx .xm-len,.tmx .xm-len[hidden]{display:contents}.tmx .xm-len[hidden]{display:none}
+.tmx .xm-len>button[data-tlen]{width:100%;max-width:96px;min-height:46px;font-size:14px}
+.tmx .xm-len>[data-tlen="15"]{grid-area:a;align-self:end;justify-self:start}.tmx .xm-len>[data-tlen="25"]{grid-area:b;align-self:start;justify-self:start}
+.tmx .xm-len>[data-tlen="45"]{grid-area:c;align-self:end;justify-self:end}.tmx .xm-len>[data-tlen="60"]{grid-area:d;align-self:start;justify-self:end}
+.tmx .xm-modes{grid-area:modes;flex-direction:row;width:100%;max-width:320px;justify-self:center}.tmx .xm-modes button{flex:1}
+.tmx .xm-cu{grid-area:cus}
+.tmx .xm-clock.lg{font-size:40px}
+@container (max-width:540px){
+ .tmx .xm-mid{gap:8px 8px;margin:4px 0 12px}
+ .tmx .xm-ring{width:172px;height:172px}.tmx .xm-clock{font-size:40px}.tmx .xm-clock.lg{font-size:29px}.tmx .xm-tom{width:28px;height:28px}.tmx .xm-lbl{font-size:13px}
+ .tmx .xm-len>button[data-tlen]{max-width:76px;min-height:42px;font-size:13px;padding:0 2px}
+ .tmx .xm-modes{max-width:none}
+}
+/* Timer page (Nov 26): full-screen overlay holds the timer card; Home keeps a small card */
+#tm-page{position:fixed;inset:0;z-index:45;display:flex;flex-direction:column;overflow-y:auto;-webkit-overflow-scrolling:touch;background:radial-gradient(90% 55% at 85% 100%,rgba(124,92,255,.28),transparent 60%),linear-gradient(170deg,#1b1352,#0e0932 78%);color:#fff;padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px)}
+#tm-page[hidden]{display:none}body.tp-open{overflow:hidden}
+#tm-page .tp-bar{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:12px;padding:10px 14px;background:rgba(20,14,66,.88);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+#tm-page .tp-foot{position:sticky;bottom:0;z-index:2;margin-top:auto;flex:none;padding:8px 14px calc(8px + env(safe-area-inset-bottom,0px));background:rgba(20,14,66,.88);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+#tm-page #tp-back{display:flex;align-items:center;justify-content:center;gap:4px;width:100%;max-width:640px;margin:0 auto;min-height:48px;padding:0 14px 0 8px;border-radius:24px;background:rgba(255,255,255,.08);border:1px solid rgba(160,130,255,.35);color:#fff;font-size:15px;font-weight:700;box-shadow:none}
+#tm-page #tp-back svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+#tm-page .tp-t{flex:1;text-align:center;font-size:17px;font-weight:800;letter-spacing:.2px}
+@media (max-width:700px) and (max-height:760px){#tm-page .tp-bar{display:none}}
+#tm-page .tp-body{width:100%;max-width:640px;margin:0 auto;padding:6px 14px 28px;box-sizing:border-box}
+@container (min-width:600px){.tmx .xm-ring{width:260px;height:260px}.tmx .xm-clock{font-size:64px}.tmx .xm-len>button[data-tlen]{max-width:110px}}
+@container (max-width:460px){
+ .tmx .xm-tools .xm-tb{flex-direction:column;justify-content:center;text-align:center;gap:4px;padding:8px 4px;min-height:74px}
+ .tmx .xm-tb b{font-size:13.5px}.tmx .xm-tb small{font-size:12px}
+/* Timer page v2 (Nov 26): subject/topic on top, fits one phone screen without scrolling */
+.tmx .xm-fields{border-top:0;padding-top:0;margin-bottom:12px}
+#tm-page .tp-body{display:flex;flex-direction:column;gap:10px;flex:1 1 auto;min-height:0}
+@container (max-width:540px){
+ .tmx .xm-main{padding:10px 12px 12px}
+ .tmx .xm-hd{margin-bottom:8px}
+ .tmx .xm-fields{flex-direction:row;gap:8px;margin-bottom:8px}
+ .tmx .xm-fw{flex:0 0 46%;min-width:0}.tmx .xm-topic{flex:1 1 0;min-width:0;width:auto}
+ .tmx .xm-field{min-height:50px;padding:5px 10px;gap:6px;border-radius:16px}
+ .tmx .xm-field>svg:not(.xm-chev){display:none}.tmx .xm-field>.xm-chev{width:18px;height:18px}
+ .tmx .xm-ft small{font-size:11px}.tmx .xm-ft .tsl{font-size:15px}.tmx .xm-ft input{font-size:14px}
+ .tmx .xm-mid{grid-template-areas:"a ring c" "b ring d" "modes modes cus";margin:0 0 10px;gap:6px 8px}
+ .tmx .xm-ring{--rs:clamp(128px,29dvh,230px);width:var(--rs);height:var(--rs)}
+ .tmx .xm-clock{font-size:calc(var(--rs)*.235)}.tmx .xm-clock.lg{font-size:calc(var(--rs)*.165)}
+ .tmx .xm-tom{width:calc(var(--rs)*.16);height:calc(var(--rs)*.16)}.tmx .xm-lbl{font-size:12px}
+ .tmx .xm-modes button{min-height:38px;font-size:14px}
+ .tmx .xm-cu{flex-wrap:nowrap;gap:4px}.tmx .xm-cu input{width:46px;min-height:32px;padding:0 4px}.tmx .xm-cu>span{font-size:12px;gap:3px}
+ .tmx .xm-act{margin-bottom:0}.tmx .xm-go{min-height:52px}.tmx .xm-rs{width:52px;height:52px}
+ .tmx .xm-tools{padding:8px 10px 10px}.tmx .xm-th{display:none}
+ .tmx .xm-tools .xm-tb{min-height:52px;padding:6px 4px;gap:2px}.tmx .xm-tb svg{width:24px;height:24px}
+ #tm-page .tp-bar{padding:6px 12px}#tm-page .tp-foot{padding:6px 12px calc(6px + env(safe-area-inset-bottom,0px))}#tm-page #tp-back{min-height:44px}
+ #tm-page .tp-body{padding:2px 12px 10px;gap:8px}
+}
+}
 /* Calendar: selected-day total box in the toolbar gap */
 .dtot{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:0;margin-left:auto;padding:3px 10px;min-height:36px;line-height:1.15;background:var(--surface);border:1px solid var(--line);border-radius:10px;white-space:nowrap}
 .dtot small{font-size:9.5px;font-weight:600;letter-spacing:.03em;color:var(--mute)}
@@ -1264,6 +1392,48 @@ nav button[aria-current=true]{background:var(--c3)!important;color:var(--accent)
   .tl .blk.plan.wb:hover .ph::after{width:20px;margin-left:-10px;height:3px}
   .tl .blk.plan.wb:hover .ph[data-ph=t]::after{top:2px}.tl .blk.plan.wb:hover .ph[data-ph=b]::after{bottom:2px}
 }
+/* Home v3 (Nov 26): taller hero so the sun scene shows; one-row timer card: Log Time left, clock middle, Start Timer right. Delete this block to undo. */
+@media(min-width:900px){
+  html body #v-log>.top{min-height:250px!important}
+  html body #v-log>.timer{display:grid!important;grid-template-columns:auto minmax(0,1fr) auto!important;grid-template-areas:"log pill go" "log clock go"!important;column-gap:14px!important;row-gap:2px!important;align-items:center!important;padding:16px 20px!important}
+  html body #v-log>.timer .tpill{grid-area:pill;justify-self:center;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  html body #v-log>.timer .tclock{grid-area:clock;font-size:42px!important;white-space:nowrap;line-height:1.1!important;margin:0!important}
+  html body #v-log>.timer .tgo{grid-area:go;width:auto!important;min-height:52px!important;padding:0 18px!important;margin:0!important}
+  html body #v-log>.timer .tbr{grid-area:log;margin:0!important;display:flex!important;justify-content:stretch!important}
+  html body #v-log>.timer .tbr button{width:auto!important;min-width:96px;min-height:52px!important;padding:0 12px!important;font-size:14px!important;white-space:nowrap}
+}
+@media(max-width:899px){
+  html body #v-log>.top{min-height:135px!important}
+  html body #v-log>.timer{grid-template-columns:auto minmax(0,1fr) auto!important;grid-template-areas:"log pill go" "log clock go"!important;column-gap:8px!important;padding:8px 10px!important}
+  html body #v-log>.timer .tpill{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  html body #v-log>.timer .tclock{font-size:clamp(26px,8.2vw,34px)!important;white-space:nowrap}
+  html body #v-log>.timer .tgo{min-height:50px!important;padding:0 12px!important;font-size:14px!important}
+  html body #v-log>.timer .tbr{grid-area:log;margin:0!important;display:flex!important;justify-content:stretch!important}
+  html body #v-log>.timer .tbr button{width:auto!important;min-width:68px;min-height:44px!important;padding:0 8px!important;font-size:12px!important;white-space:nowrap}
+}
+/* Timer flyout (Nov 26). Delete this block, the flyRefresh hooks and the flyout script to undo. */
+#tm-fly{position:fixed;z-index:48;display:flex;align-items:stretch;touch-action:none;-webkit-user-select:none;user-select:none;margin-top:env(safe-area-inset-top,0px)}
+#tm-fly[hidden]{display:none}
+#tm-fly[data-side="r"]{right:0;left:auto;flex-direction:row}
+#tm-fly[data-side="l"]{left:0;right:auto;flex-direction:row-reverse}
+#tm-fly button{margin:0;min-height:44px;color:#fff;font:inherit;border:1px solid rgba(160,130,255,.45);background:linear-gradient(165deg,#2c2078,#150f45);box-shadow:0 6px 18px rgba(10,6,40,.4);padding:0}
+#tm-fly .fta{width:28px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+#tm-fly .fta svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;transition:transform .25s}
+#tm-fly[data-side="r"][data-open="1"] .fta svg,#tm-fly[data-side="l"][data-open="0"] .fta svg{transform:rotate(180deg)}
+#tm-fly[data-side="r"] .fta{border-radius:0}#tm-fly[data-side="l"] .fta{border-radius:0}
+#tm-fly[data-side="r"][data-open="0"] .fta{border-radius:14px 0 0 14px;border-right:0}
+#tm-fly[data-side="l"][data-open="0"] .fta{border-radius:0 14px 14px 0;border-left:0}
+#tm-fly .ftp{display:flex;align-items:center;max-width:0;opacity:0;overflow:hidden;padding:0;border-width:0;pointer-events:none;cursor:pointer;transition:max-width .25s,opacity .2s}
+#tm-fly[data-open="1"] .ftp{max-width:170px;opacity:1;padding:0 12px;border-width:1px;pointer-events:auto}
+#tm-fly[data-side="r"] .ftp{border-radius:14px 0 0 14px;border-right:0}
+#tm-fly[data-side="l"] .ftp{border-radius:0 14px 14px 0;border-left:0}
+#tm-fly .ftp b{font-size:16px;font-weight:800;white-space:nowrap;font-variant-numeric:tabular-nums}
+#tm-fly .fdot{display:inline-block;flex:none;width:8px;height:8px;border-radius:50%;margin-right:7px;background:#5fd1a0}
+#tm-fly[data-st="pause"] .fdot{background:#ffc15e}#tm-fly[data-st="brk"] .fdot{background:#6db8ff}
+#tm-fly[data-st="run"] .fdot{animation:flyPulse 1.6s ease-in-out infinite}
+#tm-fly.ot .ftp b{color:#ffb199}
+#tm-fly.drag{opacity:.92}#tm-fly.drag .ftp,#tm-fly.drag .fta svg{transition:none}
+@keyframes flyPulse{50%{opacity:.35}}
 </style>
 <script>
 window.FB_CONFIG={
@@ -1316,7 +1486,7 @@ window.FB_CONFIG={
     <div class="ft"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg><div><b>Focus Session</b><small>Log your study time</small></div></div>
     <div class="fb"><button id="h-log">+ Log Time</button><button class="ghost" data-go="cal">View Records</button></div>
   </div>
-  <div class="card timer dk"><button class="tpill" id="t-pill">Focus Session</button><div class="tclock" id="t-clock">25:00</div><div class="topt" id="t-opt"><div class="tseg"><button type="button" data-tmode="pomo" aria-pressed="true">Pomodoro</button><button type="button" data-tmode="stop" aria-pressed="false">Stopwatch</button></div><div class="tlen" id="t-lenrow"><button type="button" data-tlen="15">15</button><button type="button" data-tlen="25">25</button><button type="button" data-tlen="45">45</button><input id="t-len" type="number" inputmode="numeric" min="1" max="600" aria-label="Custom Pomodoro minutes"><span>min</span></div></div><button class="tgo" id="t-go">Start Study</button><div class="tbr"><button data-tm="5">Short Break (5 min)</button><button data-tm="15">Long Break (15 min)</button><button id="t-fin" hidden>Finish and log</button><button id="h-log2">+ Log Time</button></div></div>
+  <div class="card timer dk" id="hm-timer"><button type="button" class="tpill" id="hm-pill">Focus Session</button><div class="tclock" id="hm-clock">25:00</div><button type="button" class="tgo" id="hm-go">Start Timer</button><div class="tbr"><button type="button" id="h-log2">+ Log Time</button></div></div>
   <div class="card" id="todayplan" hidden></div>
   <div class="card" id="logform" hidden>
     <div class="ch"><b>Log study time</b><button class="x" id="lf-x" aria-label="Close log form" title="Close">×</button></div>
@@ -1521,6 +1691,18 @@ window.FB_CONFIG={
 </section>
 </main>
 
+<div id="tm-page" hidden role="dialog" aria-modal="true" aria-label="Timer"><div class="tp-bar"><span class="tp-t">Timer</span></div><div class="tp-body">
+<div class="tmx" id="timer-card">
+<section class="xm-main"><div class="xm-hd"><svg class="xm-bk" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5C10.5 5.2 8.3 4.6 5 4.6v13c3.3 0 5.5.6 7 1.9 1.5-1.3 3.7-1.9 7-1.9v-13c-3.3 0-5.5.6-7 1.9z"/><path d="M12 6.5v13"/></svg><span class="xm-title" id="t-pill">Focus Session</span><span class="xm-st" id="t-st" data-s="ready"><i></i><b>Ready</b></span><button type="button" class="xm-ic" id="t-gear" aria-label="Alert and sound settings"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.6M12 18.6v2.6M2.8 12h2.6M18.6 12h2.6M5.5 5.5l1.9 1.9M16.6 16.6l1.9 1.9M5.5 18.5l1.9-1.9M16.6 7.4l1.9-1.9"/></svg></button></div>
+<div class="xm-fields" id="tm-for"><div class="xm-fw"><button type="button" class="xm-field" id="tm-sb" aria-haspopup="true" aria-expanded="false" aria-label="Choose subject"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 9.5 12 5l9.5 4.5L12 14z"/><path d="M6.5 11.8v4.2c1.4 1.4 3.2 2 5.5 2s4.1-.6 5.5-2v-4.2"/></svg><span class="xm-ft"><small>Subject</small><span class="tsl">Select subject</span></span><svg class="xm-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9.5l6 6 6-6"/></svg></button><select id="tm-s" aria-label="Subject for this session" tabindex="-1" aria-hidden="true"></select></div>
+<div class="xm-field xm-topic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6.5h11M9 12h11M9 17.5h11"/><circle cx="4.6" cy="6.5" r=".8"/><circle cx="4.6" cy="12" r=".8"/><circle cx="4.6" cy="17.5" r=".8"/></svg><div class="xm-ft"><small>Topic or Note</small><input id="tm-n" type="text" placeholder="e.g. International Relations theories..." autocomplete="off" aria-label="Topic or note for this session"></div></div><div class="tsp" id="tm-sp" hidden></div></div>
+<div class="xm-mid"><div class="xm-modes" id="t-opt"><button type="button" data-tmode="pomo" aria-pressed="true">Pomodoro</button><button type="button" data-tmode="stop" aria-pressed="false">Stopwatch</button></div>
+<div class="xm-ring"><svg viewBox="0 0 200 200" aria-hidden="true"><defs><linearGradient id="xmg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c2aaff"/><stop offset="1" stop-color="#6a47ff"/></linearGradient></defs><circle class="xm-bg" cx="100" cy="100" r="88"/><circle class="xm-fg" id="t-arc" cx="100" cy="100" r="88" transform="rotate(-90 100 100)"/><circle class="xm-dot" id="t-dot" cx="100" cy="12" r="7"/></svg><div class="xm-in"><svg class="xm-tom" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7c-4.6-.2-7.6 2.6-7.6 6.6S7.6 20 12 20s7.6-2.4 7.6-6.4S16.6 6.8 12 7z"/><path d="M12 7c-.6-1.4-1.6-2.4-3-2.8M12 7c.8-1.3 2-2 3.6-2"/></svg><div class="xm-clock" id="t-clock">25:00</div><div class="xm-lbl" id="t-lbl">FOCUS</div></div></div>
+<div class="xm-len" id="t-lenrow"><button type="button" data-tlen="15">15 min</button><button type="button" data-tlen="25">25 min</button><button type="button" data-tlen="45">45 min</button><button type="button" data-tlen="60">60 min</button><div class="xm-cu"><button type="button" id="t-cusb">Custom</button><span id="t-cuswrap" hidden><input id="t-len" type="number" inputmode="numeric" min="1" max="600" aria-label="Custom Pomodoro minutes"><span>min</span></span></div></div></div>
+<div class="xm-act"><button type="button" class="xm-go" id="t-go"><svg class="xm-pl" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"/></svg><svg class="xm-pa" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5h3.6v15H7zM13.4 4.5H17v15h-3.6z"/></svg><span class="xm-lb">Start Studying</span></button><button type="button" class="xm-rs" id="t-disc" aria-label="Reset timer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg></button><button type="button" class="xm-fin" id="t-fin" hidden>Finish and log</button></div>
+</section>
+<section class="xm-tools"><div class="xm-th"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10h12v4a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z"/><path d="M16 11h2a2.5 2.5 0 0 1 0 5h-2"/><path d="M8 3v3M12 3v3"/></svg><span>Session Tools</span></div><div class="xm-tg"><button type="button" class="xm-tb" data-tm="5"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10h12v4a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z"/><path d="M16 11h2a2.5 2.5 0 0 1 0 5h-2"/><path d="M8 3v3M12 3v3"/></svg><span><b>Short Break</b><small>5 min</small></span></button><button type="button" class="xm-tb" data-tm="15"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10h12v4a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z"/><path d="M16 11h2a2.5 2.5 0 0 1 0 5h-2"/><path d="M8 3v3M12 3v3"/></svg><span><b>Long Break</b><small>15 min</small></span></button><button type="button" class="xm-tb" id="tm-add"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg><span><b>Add Time</b><small>Custom</small></span></button></div></section></div>
+</div><div class="tp-foot"><button type="button" id="tp-back" aria-label="Back"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>Back</button></div></div>
 <div id="dlg" hidden role="dialog" aria-modal="true" aria-labelledby="d-title" style="position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.12);display:flex;align-items:center;justify-content:center;padding:16px">
   <div style="background:var(--surface);color:var(--ink);width:100%;max-width:300px;border:1px solid var(--line);border-radius:16px;padding:14px;max-height:80%;overflow:auto;box-shadow:0 8px 30px rgba(0,0,0,.35)">
     <b id="d-title" style="font-family:'Fraunces',Georgia,serif;font-size:16px;font-weight:600">Add study time</b>
@@ -1634,6 +1816,7 @@ function fillSelects(optional){
     if(id==='l-subj'&&!active.length)el.innerHTML='<option value="">Add or restore a subject first</option>';
     if(cur)el.value=cur;
   });
+  var ts=$('#tm-s');if(ts){var tcur=tm.s||ts.value,tact=S.subjects.filter(function(s){return!s.archivedAt&&!s.deleted});ts.innerHTML='<option value="">Subject</option>'+tact.map(function(s){return'<option value="'+s.id+'">'+esc(s.name)+'</option>'}).join('');ts.value=tcur;if(ts.value!==tcur)ts.value=''}
   var cv=$('#e-cov');if(cv){var keep={};cv.querySelectorAll('input:checked').forEach(function(i){keep[i.value]=1});var act=S.subjects.filter(function(s){return!s.archivedAt&&!s.deleted});cv.innerHTML=act.length?act.map(function(s){return'<label><input type="checkbox" value="'+s.id+'"'+(keep[s.id]?' checked':'')+'>'+esc(s.name)+'</label>'}).join(''):'<small style="color:var(--mute)">Add subjects first.</small>'}
 }
 
@@ -1861,6 +2044,7 @@ document.querySelectorAll('[data-cm]').forEach(function(b){b.onclick=function(){
 function wMove(n){var d=new Date(cSel+'T00:00:00');d.setDate(d.getDate()+7*n);cSel=ymd(d);cY=d.getFullYear();cM=d.getMonth();renderCal()}
 $('#c-strip').onclick=function(e){var b=e.target.closest('[data-cd]');if(b){cSel=b.dataset.cd;renderCal()}};
 function calTaskClick(e){
+  var tmb=e.target.closest('[data-cal-timer]');if(tmb){taskTimerStart(tmb.dataset.calTimer,true);return}
   var done=e.target.closest('[data-cal-task]');
   if(done){var k=S.tasks.find(function(x){return x.id===done.dataset.calTask});if(k){dmSetStatus(k,k.status==='completed'?'todo':'completed',Date.now());save();render();}return}
   var edit=e.target.closest('[data-cal-edit]');
@@ -1992,7 +2176,7 @@ $('#d-save').onclick=function(){
   if(t!==null){var dt=new Date(cSel+'T00:00:00');dt.setHours(0,t,0,0);L.start=dt.getTime()}
   if(sugSel.d&&$('#d-n').value===sugSel.d.t)L.tp=sugSel.d.k;sugSel.d=null;S.logs.push(L);
   if(dp&&dp.mode==='done'){S.plans=S.plans.filter(function(x){return x.id!==dp.id});infoId=null;infoConfirm=false}
-  var goCal=false;if(tmFinishing){goCal=tmFromCal;tmFinishing=false;tmReset()}save();closeDlg();draft=null;render();if(goCal)show('cal');
+  var goCal=false;if(tmFinishing){goCal=tmFromCal;tmFinishing=false;tmReset();tmPageClose()}save();closeDlg();draft=null;render();if(goCal)show('cal');
 };
 var slotLv=[60,45,30,15],slotMin=60,SLOT_PX=48,pd0=0,pinchAt=0;
 try{var sv=parseInt(localStorage.getItem('bcs-slot'),10);if(slotLv.indexOf(sv)>=0)slotMin=sv}catch(e){}
@@ -2132,7 +2316,7 @@ function renderCalPanel(){
   list.forEach(function(x){
     var k=x.k,sn=sname(k.subjectId),dl=wk?new Date(k.dueDate+'T00:00:00').toLocaleDateString(undefined,{weekday:'short',day:'numeric'})+' \u00B7 ':'';
     var nc=S.plans.filter(function(p){return(p.fromTask===k.id||p.taskId===k.id)&&p.date>=lo&&p.date<=hi}).length;
-    free++;h+='<div class="pcard" data-pt="'+k.id+'" title="Drag onto the timeline to add a copy"><b>'+esc(k.title)+(nc?'<span class="pc-n">\u00D7'+nc+'</span>':'')+'</b><small>'+dl+esc(sn)+' \u00B7 '+fmt(cpMin(k))+'</small></div>';
+    free++;h+='<div class="pcard" data-pt="'+k.id+'" title="Drag onto the timeline to add a copy"><b>'+esc(k.title)+(nc?'<span class="pc-n">\u00D7'+nc+'</span>':'')+'</b><small>'+dl+esc(sn)+' \u00B7 '+fmt(cpMin(k))+'</small><button type="button" class="pc-t" data-cal-timer="'+k.id+'" title="Start the study timer for this task" aria-label="Start timer for '+esc(k.title)+'">\u25B6</button></div>';
   });
   h+='<div class="pc-hint"><button type="button" class="ghost" data-cal-add="1" style="width:100%;min-height:36px">+ Add task</button></div>';
   pin.innerHTML=h;
@@ -2200,6 +2384,7 @@ function cpDrop(id,sm,dt){
 }
 $('#c-pin').addEventListener('contextmenu',function(e){if(e.target.closest('[data-pt]'))e.preventDefault()});
 $('#c-pin').addEventListener('pointerdown',function(e){
+  if(e.target.closest('[data-cal-timer]'))return;
   var c=e.target.closest('[data-pt]');if(!c||(e.pointerType==='mouse'&&e.button!==0))return;
   if(cpHold)cpEnd(false);
   var k=S.tasks.find(function(x){return x.id===c.dataset.pt&&!x.deleted});if(!k)return;
@@ -2310,7 +2495,7 @@ $('#c-info-del').onclick=function(){
 };
 $('#c-info-edit').onclick=function(){var p=planById(infoId);if(p)openDlg(p.startMin,p.min,{plan:p.id,planMode:'edit',mode:'plan',lock:true,pre:p})};
 $('#c-info-done').onclick=function(){var p=planById(infoId);if(p)openDlg(p.startMin,p.min,{plan:p.id,planMode:'done',mode:'log',lock:true,pre:p})};
-$('#c-info-start').onclick=function(){var p=planById(infoId);if(p&&planStart(p.id))tmFromCal=true};
+$('#c-info-start').onclick=function(){var p=planById(infoId);if(p)planStart(p.id,true)};
 $('#c-info-x').onclick=function(){infoId=null;infoConfirm=false;updInfo();fitTl()};
 $('#c-untimed').onclick=function(e){var b=e.target.closest('[data-blk]');if(b){infoId=b.dataset.blk;infoConfirm=false;draft=null;drawDraft();updInfo()}};
 function fitTl(){
@@ -2685,36 +2870,89 @@ function renderDk(per,tot,gp,days){
   $('#ach').innerHTML=B.map(function(x){return'<div class="bd'+(x[1]?'':' off')+'"><span style="background:'+x[2]+'"><svg class="i" viewBox="0 0 24 24" style="color:#fff"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.200 9.500l6.100-.9z"/></svg></span><small>'+x[0]+'</small></div>'}).join('');
 }
 var tmBase=document.title,TM_KEY='bcs-timer';
-var tm={mode:'pomo',brk:false,pl:1500,bl:300,acc:0,t0:0,run:false,chimed:false,iv:null,plan:null};
+var tm={mode:'pomo',brk:false,pl:1500,bl:300,acc:0,t0:0,run:false,chimed:false,iv:null,plan:null,n:'',s:'',tp:''};
 function tmTarget(){return tm.brk?tm.bl:(tm.mode==='pomo'?tm.pl:0)}
 function tmEl(){return tm.acc+(tm.run?Date.now()-tm.t0:0)}
 function tmFmt(sec){var h=Math.floor(sec/3600),m=Math.floor(sec%3600/60);return(h?h+':'+pad(m):pad(m))+':'+pad(sec%60)}
 function tmShow(){var el=tmEl(),tg=tmTarget();if(!tg)return{txt:tmFmt(Math.floor(el/1000)),ot:false};var d=tg*1000-el;if(d>0)return{txt:tmFmt(Math.ceil(d/1000)),ot:false};var o=Math.floor(-d/1000);return{txt:(o>0?'-':'')+tmFmt(o),ot:true}}
-function tmSave(){try{localStorage.setItem(TM_KEY,JSON.stringify({m:tm.mode,b:tm.brk?1:0,pl:tm.pl,bl:tm.bl,a:tm.acc,t:tm.t0,r:tm.run?1:0,p:tm.plan||null}))}catch(e){}}
+function tmSave(){try{localStorage.setItem(TM_KEY,JSON.stringify({m:tm.mode,b:tm.brk?1:0,pl:tm.pl,bl:tm.bl,a:tm.acc,t:tm.t0,r:tm.run?1:0,p:tm.plan||null,n:tm.n||'',s:tm.s||'',tp:tm.tp||''}))}catch(e){}}
 function tmDraw(){
   var s=tmShow(),el=tmEl(),started=el>0||tm.run,mins=Math.round(el/60000),clk=$('#t-clock');
-  clk.textContent=s.txt;clk.classList.toggle('ot',s.ot);
-  $('#t-go').textContent=tm.run?'Pause':(el>0?'Resume':(tm.brk?'Start Break':'Start Study'));
+  clk.textContent=s.txt;clk.classList.toggle('ot',s.ot);clk.classList.toggle('lg',s.txt.length>5);if(typeof flyRefresh==='function')flyRefresh(s);
+  var hc=$('#hm-clock');if(hc){hc.textContent=s.txt;hc.classList.toggle('ot',s.ot);var hs=el>0||tm.run||tm.brk;$('#hm-go').textContent=hs?'Open Timer':'Start Timer';$('#hm-pill').textContent=tm.brk?'Break':(hs?(tm.run?'Focus Session':'Paused'):'Focus Session')+(s.ot?' \u00b7 Overtime':'')}
+  $('#t-go .xm-lb').textContent=tm.run?'Pause':(el>0?'Resume':(tm.brk?'Start Break':'Start Studying'));
+  var tc=$('#timer-card');tc.classList.toggle('is-run',!!tm.run);tc.classList.toggle('is-brk',!!tm.brk);
+  var st=$('#t-st');st.dataset.s=tm.run?(tm.brk?'brk':'run'):(tm.brk?'brk':(el>0?'pause':'ready'));st.querySelector('b').textContent=tm.brk?(tm.run?'On break':'Break'):(tm.run?'Running':(el>0?'Paused':'Ready'));
+  var tg0=tmTarget(),fr=tg0?Math.max(0,Math.min(1,1-el/(tg0*1000))):1,df=tg0?fr:((el/1000)%60)/60,an=-Math.PI/2+df*2*Math.PI;
+  $('#t-arc').setAttribute('stroke-dasharray',(fr*552.92).toFixed(2)+' 552.92');$('#t-dot').setAttribute('cx',(100+88*Math.cos(an)).toFixed(2));$('#t-dot').setAttribute('cy',(100+88*Math.sin(an)).toFixed(2));
+  $('#t-lbl').textContent=tm.brk?'BREAK':(tm.mode==='stop'?'STOPWATCH':(s.ot?'OVERTIME':'FOCUS'));
   var f=$('#t-fin');f.textContent=tm.brk?'End break':'Finish and log';f.hidden=tm.brk?!started:mins<1;
   $('#t-pill').textContent=(tm.brk?'Break':tm.mode==='stop'?'Stopwatch':(tm.plan&&planById(tm.plan)?'Planned Session':'Focus Session'))+(s.ot?' · Overtime':'');
   document.querySelectorAll('[data-tmode]').forEach(function(b){b.setAttribute('aria-pressed',String(!tm.brk&&b.dataset.tmode===tm.mode));b.disabled=started});
   var lr=$('#t-lenrow');lr.hidden=tm.mode!=='pomo'||tm.brk;
   document.querySelectorAll('[data-tlen]').forEach(function(b){b.setAttribute('aria-pressed',String(parseInt(b.dataset.tlen,10)*60===tm.pl));b.disabled=started});
   var li=$('#t-len');li.disabled=started;if(document.activeElement!==li)li.value=Math.round(tm.pl/60);
+  var cu=tm.pl%60!==0||[15,25,45,60].indexOf(tm.pl/60)<0;$('#t-cuswrap').hidden=!(cu||tmCusOpen);var cb=$('#t-cusb');cb.disabled=started;cb.setAttribute('aria-pressed',String(cu));
+  tmDrawFor();
   document.title=tm.run?s.txt+' · StudyTrack':tmBase;
 }
+function tmDrawFor(){var f=$('#tm-for');if(!f)return;f.hidden=!!tm.brk;if(tm.brk)tmSubClose();var n=$('#tm-n'),sb=$('#tm-s');if(document.activeElement!==n&&n.value!==(tm.n||''))n.value=tm.n||'';if(sb.value!==(tm.s||'')){var ok=false;for(var i=0;i<sb.options.length;i++)if(sb.options[i].value===(tm.s||'')){ok=true;break}sb.value=ok?(tm.s||''):''}
+  var bt=$('#tm-sb'),op=sb.options[sb.selectedIndex],has=!!(sb.value&&op);bt.querySelector('.tsl').textContent=has?op.textContent:'Select subject';bt.setAttribute('aria-pressed',String(has))}
+function tmSubClose(){var p=$('#tm-sp'),b=$('#tm-sb');if(p)p.hidden=true;if(b)b.setAttribute('aria-expanded','false')}
+function tmSubOpen(){
+  var p=$('#tm-sp'),sb=$('#tm-s'),bt=$('#tm-sb'),h='',i;
+  var last={},opts=[];
+  S.logs.forEach(function(l){if(!l||!l.subj)return;var t=l.start||Date.parse(l.date+'T00:00:00')||0;if(!(last[l.subj]>=t))last[l.subj]=t});
+  for(i=0;i<sb.options.length;i++){if(sb.options[i].value)opts.push({o:sb.options[i],i:i})}
+  opts.sort(function(a,b){var x=last[a.o.value],y=last[b.o.value];if(x===undefined&&y===undefined)return a.i-b.i;if(x===undefined)return 1;if(y===undefined)return -1;return(y-x)||(a.i-b.i)});
+  opts.forEach(function(x){var o=x.o;h+='<button type="button" data-sv="'+esc(o.value)+'" aria-pressed="'+(o.value===tm.s)+'">'+esc(o.textContent)+'</button>'});
+  p.innerHTML=h||'<small>Add a subject in Settings first.</small>';
+  p.style.maxHeight='260px';p.hidden=false;bt.setAttribute('aria-expanded','true');
+  var r=bt.getBoundingClientRect(),vw=document.documentElement.clientWidth,vh=window.innerHeight,w=p.offsetWidth,hh=p.offsetHeight;
+  var left=Math.max(8,Math.min(vw-w-8,r.left+r.width/2-w/2)),top=r.bottom+6;
+  if(top+hh>vh-8){if(r.top-6-hh>8)top=r.top-6-hh;else{top=Math.max(8,vh-8-Math.min(hh,vh-16));p.style.maxHeight=(vh-16)+'px'}}
+  p.style.left=left+'px';p.style.top=top+'px';
+  var sel=p.querySelector('[aria-pressed=true]');if(sel)p.scrollTop=Math.max(0,sel.offsetTop-60);
+}
+function tmSetFor(note,subj,tp){tm.n=note||'';tm.s=subj||'';tm.tp=tp||'';if(typeof sugSel!=='undefined'&&sugSel)sugSel.t=tm.tp&&tm.n?{k:tm.tp,t:tm.n}:null;tmSave();tmDrawFor()}
 function tmTick(){tmDraw();var tg=tmTarget();if(tg&&!tm.chimed&&tmEl()>=tg*1000){tm.chimed=true;tmChime();tmNotify(false)}}
 function tmRun(){clearInterval(tm.iv);tm.iv=setInterval(tmTick,250)}
 function tmStop(){if(tm.run){tm.acc+=Date.now()-tm.t0;tm.run=false}clearInterval(tm.iv);tm.iv=null}
-function tmConfirmDiscard(){var m=Math.round(tmEl()/60000);return tm.brk||m<1||confirm('Discard this study session ('+m+' min)? Press Cancel, then use "Finish and log" to save it.')}
-function tmReset(){tmStop();tm.acc=0;tm.chimed=false;tm.brk=false;tm.plan=null;tmFromCal=false;tmSave();tmDraw()}
+function tmAsk(msg,okTxt,cb){
+  var old=$('#tm-ask');if(old)old.remove();
+  var o=document.createElement('div');o.id='tm-ask';o.setAttribute('role','dialog');o.setAttribute('aria-modal','true');
+  o.style.cssText='position:fixed;inset:0;z-index:70;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;padding:16px';
+  o.innerHTML='<div style="background:var(--surface);color:var(--ink);width:100%;max-width:320px;border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 8px 30px rgba(0,0,0,.35)"><p style="margin:0 0 14px;font-size:14px;line-height:1.45"></p><div style="display:flex;gap:8px"><button type="button" class="ghost" data-k style="flex:1;min-height:40px">Keep session</button><button type="button" data-o style="flex:1;min-height:40px;background:var(--accent);color:var(--on-accent)"></button></div></div>';
+  o.querySelector('p').textContent=msg;o.querySelector('[data-o]').textContent=okTxt;
+  function close(){o.remove()}
+  o.querySelector('[data-k]').onclick=close;
+  o.querySelector('[data-o]').onclick=function(){close();cb()};
+  o.onclick=function(e){if(e.target===o)close()};
+  document.body.appendChild(o);o.querySelector('[data-k]').focus();
+}
+function tmGuard(cb){var m=Math.round(tmEl()/60000);if(tm.brk||m<1||(!tm.run&&tmEl()<=0)){cb();return}tmAsk('A study session ('+m+' min) is in progress. Discard it and continue? To keep it, choose Keep session, then Finish and log.','Discard and continue',cb)}
+function tmReset(){tmStop();tm.acc=0;tm.chimed=false;tm.brk=false;tm.plan=null;tm.n='';tm.s='';tm.tp='';if(typeof sugSel!=='undefined'&&sugSel)sugSel.t=null;tmFromCal=false;tmSave();tmDraw()}
 var tmFinishing=false,tmFromCal=false;
-function tmFinish(){var el=Math.min(1440,Math.max(1,Math.round(tmEl()/60000))),n=new Date();tmStop();tmSave();tmDraw();tmFinishing=true;cSel=today();var pp=tm.plan?planById(tm.plan):null;openDlg(Math.max(0,n.getHours()*60+n.getMinutes()-el),el,{lock:true,mode:'log',plan:pp?pp.id:null,planMode:'done',pre:pp})}
-function planStart(id){
+function tmFinish(){var el=Math.min(1440,Math.max(1,Math.round(tmEl()/60000))),n=new Date();tmStop();tmSave();tmDraw();tmFinishing=true;cSel=today();var pp=tm.plan?planById(tm.plan):null,pk=(tm.n||tm.s)?{note:tm.n||'',tp:tm.tp||'',subj:tm.s||''}:pp;openDlg(Math.max(0,n.getHours()*60+n.getMinutes()-el),el,{lock:true,mode:'log',plan:pp?pp.id:null,planMode:'done',pre:pk})}
+function planStart(id,fromCal){
   var p=planById(id);if(!p)return false;
-  if((tmEl()>0||tm.run)&&!tmConfirmDiscard())return false;
-  tmStop();tm.acc=0;tm.chimed=false;tm.brk=false;tm.mode='pomo';tm.pl=Math.max(60,Math.min(36000,p.min*60));tm.plan=p.id;
-  tm.run=true;tm.t0=Date.now();tmRun();tmSave();tmDraw();tmPrepareAudio();show('log');tmFromCal=false;return true;
+  tmGuard(function(){planStart2(p,fromCal)});return true;
+}
+function planStart2(p,fromCal){
+  tmStop();tm.acc=0;tm.chimed=false;tm.brk=false;tm.mode='pomo';tm.pl=Math.max(60,Math.min(36000,p.min*60));tm.plan=p.id;tm.n=p.note||'';tm.s=p.subj||'';tm.tp=p.tp||'';if(typeof sugSel!=='undefined'&&sugSel)sugSel.t=tm.tp&&tm.n?{k:tm.tp,t:tm.n}:null;
+  tm.run=true;tm.t0=Date.now();tmRun();tmSave();tmDraw();tmPrepareAudio();show('log');tmPageOpen();tmFromCal=!!fromCal;return true;
+}
+function taskTimerStart(id,fromCal){
+  var k=S.tasks.find(function(x){return x.id===id&&!x.deleted});if(!k)return false;
+  tmGuard(function(){taskTimerStart2(k,fromCal)});return true;
+}
+function taskTimerStart2(k,fromCal){
+  var lp=S.plans.find(function(p){return p.taskId===k.id}),tp=k.topicId&&S.topics.some(function(t){return t.id===k.topicId&&!t.deleted&&!t.archivedAt})?k.topicId:'',sb=k.subjectId||'';
+  if(!sb&&tp){var tt=S.topics.find(function(t){return t.id===tp}),uu=tt?S.units.find(function(u){return u.id===tt.unitId}):null;if(uu)sb=uu.subjectId||''}
+  tmStop();tm.acc=0;tm.chimed=false;tm.brk=false;tm.plan=null;
+  if(lp&&lp.min>0){tm.mode='pomo';tm.pl=Math.max(60,Math.min(36000,lp.min*60))}
+  tm.n=k.title;tm.s=sb;tm.tp=tp;if(typeof sugSel!=='undefined'&&sugSel)sugSel.t=tp?{k:tp,t:k.title}:null;
+  tm.run=true;tm.t0=Date.now();tmRun();tmSave();tmDraw();tmPrepareAudio();show('log');tmPageOpen();tmFromCal=!!fromCal;return true;
 }
 var tmAudio=null;function tmPrepareAudio(){try{var AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;if(!tmAudio)tmAudio=new AC();if(tmAudio.state==='suspended')tmAudio.resume()}catch(e){}}
 var AL_KEY='bcs-alert',AL_CUS='bcs-alert-sound',alCbuf=null;
@@ -2783,18 +3021,94 @@ $('#t-go').onclick=function(){
   tm.run=true;tm.t0=Date.now();tmRun();tmSave();tmDraw();
 };
 $('#t-fin').onclick=function(){if(tm.brk){tmReset();return}tmFinish()};
-$('#t-pill').onclick=function(){if(!tmConfirmDiscard())return;tmReset()};
-document.querySelectorAll('[data-tm]').forEach(function(b){b.onclick=function(){if(!tmConfirmDiscard())return;tmStop();tm.acc=0;tm.chimed=false;tm.brk=true;tm.plan=null;tm.bl=parseInt(b.dataset.tm,10)*60;tmSave();tmDraw()}});
+$('#t-disc').onclick=function(){var m=Math.round(tmEl()/60000);if(m<1||tm.brk){tmReset();return}tmAsk('Discard this study session ('+m+' min)? It will not be logged.','Discard',tmReset)};
+var tpOpen=false;
+function tmPageOpen(){var pg=$('#tm-page');pg.hidden=false;pg.scrollTop=0;document.body.classList.add('tp-open');if(!tpOpen){try{history.pushState({tp:1},'')}catch(e){}}tpOpen=true;tmDraw()}
+function tmPageClose(fromPop){if(!tpOpen)return;tpOpen=false;$('#tm-page').hidden=true;document.body.classList.remove('tp-open');tmSubClose();if(!fromPop){try{if(history.state&&history.state.tp)history.back()}catch(e){}}var l=$('#v-log');if(l&&!l.hidden)fitHome();flyRefresh()}
+$('#hm-go').onclick=$('#hm-pill').onclick=function(){tmPageOpen()};
+
+/* Timer flyout (Nov 26): small edge tab shown on every screen while a session or break is active and the Timer page is closed. Device-only prefs in bcs-fly {s:'l'|'r', y:0..1, o:0|1}. */
+var flyEl=null,flySt={s:'r',y:.4,o:0},flyMoved=false,flyWas=false;
+function flyLoad(){try{var j=JSON.parse(localStorage.getItem('bcs-fly')||'null');if(j&&typeof j==='object'){if(j.s==='l'||j.s==='r')flySt.s=j.s;if(typeof j.y==='number'&&j.y>=0&&j.y<=1)flySt.y=j.y;if(j.o===1||j.o===0)flySt.o=j.o}}catch(e){}}
+function flySave(){try{localStorage.setItem('bcs-fly',JSON.stringify(flySt))}catch(e){}}
+function flyLimits(){var h=(flyEl&&flyEl.offsetHeight)||44,top=8,bot=window.innerHeight-h-(window.innerWidth<900?92:8);return[top,Math.max(top,bot)]}
+function flyPlace(){if(!flyEl)return;var l=flyLimits();flyEl.style.top=Math.round(l[0]+flySt.y*(l[1]-l[0]))+'px';flyEl.dataset.side=flySt.s;flyEl.dataset.open=flySt.o;var a=$('#tm-fa');if(a){a.setAttribute('aria-expanded',flySt.o?'true':'false');a.setAttribute('aria-label',flySt.o?'Hide timer':'Show timer')}}
+function flyRefresh(s){
+  if(!flyEl)return;
+  var on=(tmEl()>0||tm.run||tm.brk)&&!tpOpen;
+  flyEl.hidden=!on;
+  if(!on){flyWas=false;return}
+  s=s||tmShow();
+  $('#tm-ft').textContent=(tm.brk?'Break ':'')+s.txt;
+  flyEl.classList.toggle('ot',!!s.ot);
+  flyEl.dataset.st=tm.brk?'brk':(tm.run?'run':'pause');
+  if(!flyWas){flyWas=true;flyPlace()}
+}
+(function(){
+  flyLoad();
+  var el=document.createElement('div');el.id='tm-fly';el.hidden=true;
+  el.innerHTML='<button type="button" class="ftp" id="tm-fp" aria-label="Open timer"><i class="fdot"></i><b id="tm-ft">0:00</b></button><button type="button" class="fta" id="tm-fa" aria-label="Show timer" aria-expanded="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>';
+  document.body.appendChild(el);flyEl=el;
+  var d=null;
+  el.addEventListener('pointerdown',function(e){
+    if(e.button!==undefined&&e.button!==0)return;
+    var r=el.getBoundingClientRect();d={x:e.clientX,y:e.clientY,l:r.left,t:r.top,w:r.width,id:e.pointerId,mv:false};
+    document.addEventListener('pointermove',mv);document.addEventListener('pointerup',end);document.addEventListener('pointercancel',end);
+  });
+  function mv(e){
+    if(!d||e.pointerId!==d.id)return;
+    var dx=e.clientX-d.x,dy=e.clientY-d.y;
+    if(!d.mv){if(Math.hypot(dx,dy)<8)return;d.mv=true;el.classList.add('drag')}
+    var lim=flyLimits(),vw=document.documentElement.clientWidth;
+    el.style.left=Math.max(0,Math.min(vw-d.w,d.l+dx))+'px';el.style.right='auto';
+    el.style.top=Math.max(lim[0],Math.min(lim[1],d.t+dy))+'px';
+    e.preventDefault();
+  }
+  function end(){
+    document.removeEventListener('pointermove',mv);document.removeEventListener('pointerup',end);document.removeEventListener('pointercancel',end);
+    if(!d)return;
+    if(d.mv){
+      var r=el.getBoundingClientRect(),lim=flyLimits();
+      flySt.s=(r.left+r.width/2)<document.documentElement.clientWidth/2?'l':'r';
+      flySt.y=lim[1]>lim[0]?Math.min(1,Math.max(0,(r.top-lim[0])/(lim[1]-lim[0]))):0;
+      el.classList.remove('drag');el.style.left='';el.style.right='';
+      flySave();flyPlace();flyMoved=true;setTimeout(function(){flyMoved=false},60);
+    }
+    d=null;
+  }
+  $('#tm-fa').addEventListener('click',function(){if(flyMoved)return;flySt.o=flySt.o?0:1;flySave();flyPlace()});
+  $('#tm-fp').addEventListener('click',function(){if(flyMoved)return;tmPageOpen()});
+  window.addEventListener('resize',flyPlace);
+  flyRefresh();
+})();
+$('#tp-back').onclick=function(){tmPageClose()};
+window.addEventListener('popstate',function(){if(tpOpen)tmPageClose(true)});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&tpOpen&&$('#dlg').hidden&&$('#clk').hidden&&!$('#tm-ask')&&$('#tm-sp').hidden&&$('#tm-sug').hidden)tmPageClose()},true);
+$('#tm-add').onclick=function(){tmPageClose();show('log');var f=$('#logform');if(f.hidden)$('#h-log2').click();else{f.scrollIntoView({behavior:'smooth',block:'center'})}};
+var tmCusOpen=false;
+$('#t-cusb').onclick=function(){if(tmEl()>0||tm.run)return;tmCusOpen=!tmCusOpen;tmDraw();if(tmCusOpen)$('#t-len').focus()};
+$('#t-gear').onclick=function(){tmPageClose();show('subj');setTimeout(function(){var c=$('#al-card');if(c)c.scrollIntoView({behavior:'smooth',block:'start'})},80)};
+document.querySelectorAll('[data-tm]').forEach(function(b){b.onclick=function(){tmGuard(function(){tmStop();tm.acc=0;tm.chimed=false;tm.brk=true;tm.plan=null;tm.bl=parseInt(b.dataset.tm,10)*60;tmSave();tmDraw()})}});
 document.querySelectorAll('[data-tmode]').forEach(function(b){b.onclick=function(){if(tmEl()>0||tm.run)return;tm.mode=b.dataset.tmode;tm.brk=false;tm.chimed=false;tmSave();tmDraw()}});
 function tmSetLen(min){if(!(min>=1&&min<=600)||tmEl()>0||tm.run)return false;tm.pl=min*60;tm.chimed=false;tmSave();tmDraw();return true}
 document.querySelectorAll('[data-tlen]').forEach(function(b){b.onclick=function(){tmSetLen(parseInt(b.dataset.tlen,10))}});
 $('#t-len').addEventListener('input',function(){tmSetLen(parseInt(this.value,10))});
 $('#t-len').addEventListener('change',function(){if(!tmSetLen(parseInt(this.value,10)))this.value=Math.round(tm.pl/60)});
 $('#t-len').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();this.blur()}});
+$('#tm-n').addEventListener('input',function(){tm.n=this.value;if(tm.tp&&(typeof sugSel==='undefined'||!sugSel||!sugSel.t||sugSel.t.t!==this.value))tm.tp='';tmSave()});
+$('#tm-n').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();this.blur()}});
+document.body.appendChild($('#tm-sp'));
+$('#tm-sb').addEventListener('click',function(){if($('#tm-sp').hidden)tmSubOpen();else tmSubClose()});
+$('#tm-sp').addEventListener('click',function(e){var b=e.target.closest('[data-sv]');if(!b)return;var v=b.dataset.sv;tm.s=(tm.s===v)?'':v;$('#tm-s').value=tm.s;tmSave();tmDrawFor();tmSubClose()});
+$('#tm-n').addEventListener('focus',tmSubClose);
+document.addEventListener('pointerdown',function(e){if(!e.target.closest('#tm-for')&&!e.target.closest('#tm-sp'))tmSubClose()});
+window.addEventListener('resize',tmSubClose);window.addEventListener('scroll',function(e){var t=e.target;if(t&&t.nodeType===1&&t.closest('#tm-sp'))return;tmSubClose()},true);
+document.addEventListener('keydown',function(e){if(e.key==='Escape')tmSubClose()});
 // Restore a timer that was running or paused before a refresh or closed tab.
 (function(){try{var d=JSON.parse(localStorage.getItem(TM_KEY)||'null');if(!d||typeof d!=='object')return;
   if(d.m==='stop'||d.m==='pomo')tm.mode=d.m;
   if(typeof d.p==='string'&&d.p)tm.plan=d.p;
+  if(typeof d.n==='string')tm.n=d.n.slice(0,200);if(typeof d.s==='string')tm.s=d.s;if(typeof d.tp==='string')tm.tp=d.tp;
   var pl=Number(d.pl),bl=Number(d.bl);if(pl>=60&&pl<=36000)tm.pl=Math.round(pl);if(bl>=60&&bl<=36000)tm.bl=Math.round(bl);
   tm.brk=!!d.b;tm.acc=Math.max(0,Number(d.a)||0);
   if(d.r&&Number(d.t)>0&&Number(d.t)<=Date.now()){tm.run=true;tm.t0=Number(d.t)}
@@ -4018,7 +4332,7 @@ $('#syl').addEventListener('click',function(e){
   }
   var sh=t.closest('[data-s]');if(sh){var sid=sh.dataset.s;sylOpen=sylOpen===sid?-1:sid;sylTouched=true;sylMenu=null;if(sylOpen!==-1)sylCollapse(sylOpen);renderSyl()}
 });
-var tmn={},sugSel={l:null,d:null};
+var tmn={},sugSel={l:null,d:null,t:null};
 function sugSetup(inp,sel,key){
   var box=document.createElement('div'),last=[],idx=-1;
   box.className='sug';box.hidden=true;inp.insertAdjacentElement('afterend',box);
@@ -4054,6 +4368,7 @@ function sugSetup(inp,sel,key){
     inp.value=x.t;sugSel[key]=x.k?{k:x.k,t:x.t}:null;
     for(var i=0;i<sel.options.length;i++)if(sel.options[i].value===x.subjectId){sel.value=x.subjectId;break}
     box.hidden=true;idx=-1;
+    if(typeof inp.sugPick==='function')inp.sugPick(x);
   }
   inp.sugShow=show;
   inp.addEventListener('input',show);inp.addEventListener('focus',show);
@@ -4078,6 +4393,29 @@ function sugSetup(inp,sel,key){
 }
 sugSetup($('#l-n'),$('#l-subj'),'l');
 sugSetup($('#d-n'),$('#d-subj'),'d');
+$('#tm-n').sugPick=function(x){tm.n=x.t;tm.tp=x.k||'';tm.s=$('#tm-s').value||x.subjectId||'';tmSave();tmDrawFor()};
+sugSetup($('#tm-n'),$('#tm-s'),'t');
+(function(){
+  var inp=$('#tm-n'),bx=inp.nextElementSibling;
+  if(!bx||!bx.classList.contains('sug'))return;
+  bx.classList.add('tm-sugpop');bx.id='tm-sug';document.body.appendChild(bx);
+  function place(){
+    if(bx.hidden)return;
+    var f=inp.closest('.xm-field')||inp,r=f.getBoundingClientRect(),vw=document.documentElement.clientWidth,vh=window.innerHeight;
+    var w=Math.min(Math.max(r.width,240),vw-16);bx.style.width=w+'px';bx.style.maxHeight='210px';
+    var hh=bx.offsetHeight,left=Math.max(8,Math.min(vw-w-8,r.left)),top=r.bottom+6;
+    if(top+hh>vh-8){if(r.top-6-hh>8)top=r.top-6-hh;else{top=Math.max(8,vh-8-Math.min(hh,vh-16));bx.style.maxHeight=(vh-16)+'px'}}
+    bx.style.left=left+'px';bx.style.top=top+'px';
+  }
+  new MutationObserver(place).observe(bx,{attributes:true,attributeFilter:['hidden']});
+  inp.addEventListener('input',function(){setTimeout(place,0)});
+  window.addEventListener('resize',place);
+  window.addEventListener('scroll',place,true);
+  inp.addEventListener('keydown',function(e){if(e.key==='Escape'&&!bx.hidden){bx.hidden=true;e.stopPropagation()}});
+  document.addEventListener('pointerdown',function(e){if(!bx.hidden&&e.target!==inp&&!bx.contains(e.target))bx.hidden=true});
+})();
+if(tm.tp&&tm.n)sugSel.t={k:tm.tp,t:tm.n};
+tmDrawFor();
 
 var TK_REP={daily:'Daily',weekdays:'Weekdays',weekly:'Weekly',monthly:'Monthly'};
 /* "... daily", "... every week" at the END of a typed task sets a repeat (the words are removed from the title). */
@@ -4225,7 +4563,7 @@ function tkRow(k,t0,tm){
   if(k.priority)meta.push('<span><i class="pd p-'+k.priority+'"></i>'+k.priority+'</span>');
   if(k.repeat&&TK_REP[k.repeat])meta.push('<span>\u21bb '+TK_REP[k.repeat]+'</span>');
   var rs=(od&&!dn&&tkHi!==k.id)?'<div style="display:flex;gap:6px;margin-top:5px"><button class="tqs" data-act="qday" data-d="0">Today</button><button class="tqs" data-act="qday" data-d="1">Tomorrow</button></div>':'';
-  return'<div class="tq'+(dn?' done':'')+(tkSelected[k.id]?' selected':'')+(tkHi===k.id?' hi':'')+'" data-id="'+k.id+'">'+(tkSelectMode?'<label class="tk-select"><input type="checkbox" data-act="select" '+(tkSelected[k.id]?'checked':'')+' aria-label="Select task"></label>':'')+'<button class="tcb'+(dn?' on':dg?' half':'')+'" data-act="toggle" role="checkbox" aria-checked="'+dn+'" aria-label="'+(dn?'Mark as to do':'Mark as completed')+'"></button><div class="tqb" data-act="edit" tabindex="0" role="button"><div class="tqt">'+esc(k.title)+'</div>'+(meta.length?'<div class="tqm">'+meta.join('')+'</div>':'')+rs+'</div>'+(dn?'':dg?'<button class="tqs on" data-act="stop">In progress</button>':'<button class="tqs" data-act="start">Start</button>')+((tkTyped||'').trim()&&!dn&&tkHi!==k.id?'<button class="tqs" data-act="sched">Set time</button>':'')+'</div>';
+  return'<div class="tq'+(dn?' done':'')+(tkSelected[k.id]?' selected':'')+(tkHi===k.id?' hi':'')+'" data-id="'+k.id+'">'+(tkSelectMode?'<label class="tk-select"><input type="checkbox" data-act="select" '+(tkSelected[k.id]?'checked':'')+' aria-label="Select task"></label>':'')+'<button class="tcb'+(dn?' on':dg?' half':'')+'" data-act="toggle" role="checkbox" aria-checked="'+dn+'" aria-label="'+(dn?'Mark as to do':'Mark as completed')+'"></button><div class="tqb" data-act="edit" tabindex="0" role="button"><div class="tqt">'+esc(k.title)+'</div>'+(meta.length?'<div class="tqm">'+meta.join('')+'</div>':'')+rs+'</div>'+(dn?'':'<button class="tqs tmr" data-act="timer" title="Start the study timer for this task" aria-label="Start timer for this task">\u25B6 Timer</button>')+(dn?'':dg?'<button class="tqs on" data-act="stop">In progress</button>':'<button class="tqs" data-act="start">Start</button>')+((tkTyped||'').trim()&&!dn&&tkHi!==k.id?'<button class="tqs" data-act="sched">Set time</button>':'')+'</div>';
 }
 function renderTasks(){
   var el=$('#tk-list');if(!el)return;
@@ -4281,6 +4619,7 @@ $('#tk-list').addEventListener('click',function(e){
   if(act==='qset'&&k){tkApplySet(k.id);return}
   if(act==='select'&&k){return}
   if(act==='toggle'&&k){var wasDone=k.status==='completed';dmSetStatus(k,wasDone?'todo':'completed',now);save();render();if(!wasDone)tkDoneBar(k);return}
+  if(act==='timer'&&k){taskTimerStart(k.id,false);return}
   if(act==='start'&&k){dmSetStatus(k,'in_progress',now);save();render();return}
   if(act==='stop'&&k){dmSetStatus(k,'todo',now);save();render();return}
   if(act==='edit'&&k){tkEdit=k.id;tkDraft={title:k.title,subj:k.subjectId||'',topic:k.topicId||'',due:k.dueDate||'',dueTime:k.dueTime||'',prio:k.priority||'',status:k.status};tkDelId=null;renderTasks();return}
