@@ -1312,6 +1312,7 @@ body #v-log>.timer .topt .tfor input{flex:1 1 0;width:auto;min-width:0;min-heigh
 .rv-act button small{font-weight:700;font-size:11px;opacity:.92;color:inherit}
 .rv-actR button{background:var(--accent);color:var(--on-accent)}
 .rv-actR button+button{border-left:1px solid rgba(255,255,255,.3)}
+.rv-actR button[data-rv-remove]{background:var(--bad);color:#fff}
 .rv-fg{position:relative;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 13px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--line);border-radius:12px;touch-action:pan-y;user-select:none;-webkit-user-select:none;cursor:grab;transition:transform .26s cubic-bezier(.2,.8,.2,1)}
 .rv-fg.drag{transition:none;cursor:grabbing}
 .rv-fg:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
@@ -3272,6 +3273,7 @@ function dmSetStatus(k,status,now){
   k.status=status;k.completedAt=status==='completed'?now:null;k.updatedAt=now;
   if(status!=='completed'&&was==='completed')tkRestorePlan(k);
   if(status==='completed'&&was!=='completed'&&k.repeat)tkSpawnNext(k,now);
+  if(status==='completed'&&was!=='completed'&&k.topicId)revFromTask(k);
   return k;
 }
 /* Bring back the Calendar session of a task that was completed or deleted (length kept in task.planMin). */
@@ -3496,7 +3498,7 @@ function trkMark(t,u,tr,on,now){
     else{var d=Object.assign({},t.trkDone||{});d[x]=on?1:0;t.trkDone=d;t.updatedAt=now}
     if(wsTrack(x)){var wsA=Object.assign({},t.wsteps||{}),wv=on?1:0;wsA[x]={u:wv,o:wv,p:wv,m:wv};t.wsteps=wsA;t.updatedAt=now}
   });
-  if(on)revAuto(t,list);
+  if(on)revAuto(t,list,true);
 }
 
 /* ===== Written / Bank step cards. Optional additive field on a topic: wsteps = {written:{u,o,p,m}, bank:{u,o,p,m}} (1 = checked).
@@ -5382,8 +5384,14 @@ function revSetCustom(id){
   var rv=t.rev;rv.next=next;rv.last=td;rv.n=(rv.n||0)+1;rv.hist=(rv.hist||[]).concat([[td,'c']]).slice(-10);
   revCustom=null;t.updatedAt=Date.now();save();renderRev();
 }
-function revAuto(t,list){
-  if(typeof REV_STEPS==='undefined'||!t||t.deleted||t.rev!==undefined||list.indexOf('prelim')<0)return;
+function revFromTask(k){
+  try{if(typeof S==='undefined'||typeof revEnroll!=='function'||typeof REV_STEPS==='undefined')return;
+    var t=S.topics.find(function(x){return x.id===k.topicId});
+    if(!t||t.deleted||t.rev!==undefined||!anPrelim(t)||!tkTopicRec(t.id))return;
+    if(dmTopicProg(S,t)>=100)revEnroll(t,revAdd(1))}catch(e){}
+}
+function revAuto(t,list,again){
+  if(typeof REV_STEPS==='undefined'||!t||t.deleted||(t.rev!==undefined&&!(again&&t.rev===null))||list.indexOf('prelim')<0)return;
   revEnroll(t,revAdd(1));
 }
 var revUpAll=false,rvUB=null,rvUT=0;
@@ -5421,7 +5429,7 @@ function revRow(x){
   var btn=[['f','Forgot','#d64545'],['h','Hard','#e08a2e'],['g','Good','#2f9e6b'],['e','Easy','#4f7fe0']].map(function(b){
     return'<button type="button" data-rv-rate="'+t.id+'" data-code="'+b[0]+'" style="background:'+b[2]+'">'+b[1]+'<small>'+g[b[0]]+'d</small></button>'}).join('');
   var h='<div class="rv-sw" data-id="'+t.id+'" data-kind="t"><div class="rv-act rv-actL">'+btn+'</div>'
-    +'<div class="rv-act rv-actR"><button type="button" data-rv-custom="'+t.id+'">Custom&hellip;</button></div>'
+    +'<div class="rv-act rv-actR"><button type="button" data-rv-custom="'+t.id+'">Custom&hellip;</button><button type="button" data-rv-remove="'+t.id+'">Remove</button></div>'
     +'<div class="rv-fg" tabindex="0"><div class="rv-tx"><b>'+esc(t.title)+'</b><small>'+esc(x.sb.name)+' &rsaquo; '+esc(x.u.title)+'</small></div>'
     +'<div class="rv-st"><span class="'+(late>0?'late':'')+'">'+(late>0?late+'d overdue':'Due today')+'</span><small>Step '+(st+1)+' of '+REV_STEPS.length+'</small></div></div></div>';
   if(revCustom===t.id)h+='<div class="rv-cwrap"><div class="rv-c"><input id="rv-cd" type="number" min="1" max="3650" inputmode="numeric" placeholder="days" aria-label="Days until next revision"><span style="color:var(--mute);font-size:12px">or</span><input id="rv-cdate" type="date" min="'+revAdd(1)+'" aria-label="Next revision date"><button type="button" data-rv-cset="'+t.id+'">Set</button><button type="button" class="ghost" data-rv-ccancel="1">Cancel</button></div><div style="margin-top:6px"><button type="button" class="rv-link" data-rv-remove="'+t.id+'">Remove from Mastery</button></div></div>';
@@ -5430,7 +5438,7 @@ function revRow(x){
 function revUpRow(x){
   var t=x.t,rv=t.rev,dt=new Date(rv.next+'T00:00:00'),n=until(rv.next);
   var ds=isNaN(dt)?rv.next:dt.toLocaleDateString(undefined,{weekday:'short',day:'numeric',month:'short'});
-  var btn=[2,3,4].map(function(k){return'<button type="button" data-rv-push="'+t.id+'" data-n="'+k+'">+'+k+' days</button>'}).join('');
+  var btn=[2,3,4].map(function(k){return'<button type="button" data-rv-push="'+t.id+'" data-n="'+k+'">+'+k+' days</button>'}).join('')+'<button type="button" data-rv-remove="'+t.id+'">Remove</button>';
   return'<div class="rv-sw" data-id="'+t.id+'" data-kind="u"><div class="rv-act rv-actR">'+btn+'</div>'
     +'<div class="rv-fg" tabindex="0"><div class="rv-tx"><b>'+esc(t.title)+'</b><small>'+esc(x.sb.name)+' &rsaquo; '+esc(x.u.title)+'</small></div>'
     +'<div class="rv-st"><span>'+ds+'</span><small>'+(n===1?'Tomorrow':'in '+n+' days')+'</small></div></div></div>';
@@ -5438,7 +5446,7 @@ function revUpRow(x){
 function revUpcoming(all,td){
   var up=all.filter(function(x){return x.t.rev.next>td});if(!up.length)return'';
   var cut=revUpAll?up.length:15;
-  var h='<div class="card rv-up"><div class="ch"><b>Coming up</b><span style="color:var(--mute);font-size:12px">'+up.length+' topic'+(up.length>1?'s':'')+'</span></div><div class="rv-hint">Swipe left to move a date &middot; or tap a row</div>'+up.slice(0,cut).map(revUpRow).join('');
+  var h='<div class="card rv-up"><div class="ch"><b>Coming up</b><span style="color:var(--mute);font-size:12px">'+up.length+' topic'+(up.length>1?'s':'')+'</span></div><div class="rv-hint">Swipe left to move a date or remove &middot; or tap a row</div>'+up.slice(0,cut).map(revUpRow).join('');
   if(up.length>cut)h+='<button type="button" class="ghost" data-rv-upall="1" style="width:100%;margin-top:6px">Show '+(up.length-cut)+' more</button>';
   return h+'</div>';
 }
@@ -5466,7 +5474,7 @@ function renderRev(){
   if(cand>0)h+='<div class="card"><div class="ch"><b>Start revising what you\u2019ve studied</b></div><p style="margin:6px 0 10px;color:var(--mute);font-size:13px">'+cand+' topic'+(cand>1?'s':'')+' you\u2019ve already started or studied can join Mastery. They\u2019ll be due tomorrow, and up to '+REV_CAP+' a day will show up, \u201cNeed revision\u201d topics first.</p><button type="button" class="full" data-rv-start="1">Start revising '+cand+' studied topic'+(cand>1?'s':'')+'</button></div>';
   h+=revExamNote(all);
   h+='<div class="rv-main"><h2 style="margin-top:6px">Today\u2019s revision</h2>';
-  if(shown.length)h+='<div class="rv-hint">Swipe right to rate &middot; left for custom &middot; or tap a row</div><div class="rv-q">'+shown.map(revRow).join('')+'</div>';
+  if(shown.length)h+='<div class="rv-hint">Swipe right to rate &middot; left for custom or remove &middot; or tap a row</div><div class="rv-q">'+shown.map(revRow).join('')+'</div>';
   else if(!all.length)h+='<div class="card empty">Nothing here yet. Add a topic below'+(cand>0?', or start with the topics you\u2019ve already studied.':', or mark topics as Studied in the Syllabus and come back.')+'</div>';
   else if(done>=REV_CAP)h+='<div class="card empty">Done for today \u2014 you revised '+done+' topic'+(done>1?'s':'')+'. Nice work.</div>';
   else{
@@ -5494,7 +5502,7 @@ $('#v-rev').addEventListener('click',function(e){
   if(b.dataset.rvCustom){revCustom=b.dataset.rvCustom;renderRev();return}
   if(b.dataset.rvCcancel){revCustom=null;renderRev();return}
   if(b.dataset.rvCset){revSetCustom(b.dataset.rvCset);return}
-  if(b.dataset.rvRemove){var t=revFind(b.dataset.rvRemove);if(t&&confirm('Remove \u201c'+t.title+'\u201d from Mastery? Its revision history for this topic will be cleared.')){t.rev=null;t.updatedAt=Date.now();revCustom=null;save();renderRev()}return}
+  if(b.dataset.rvRemove){var t=revFind(b.dataset.rvRemove);if(t&&confirm('Remove \u201c'+t.title+'\u201d from Mastery? Its revision history for this topic will be cleared.')){var prevRv=JSON.stringify(t.rev);t.rev=null;t.updatedAt=Date.now();revCustom=null;save();renderRev();rvUndoShow('Removed from Mastery',function(){t.rev=JSON.parse(prevRv);t.updatedAt=Date.now();save();renderRev()})}return}
   if(b.dataset.rvStart){
     var n=0,nx=revAdd(1);S.topics.forEach(function(t){if(!t.deleted&&!t.rev&&t.studyStatus&&anPrelim(t)&&tkTopicRec(t.id)){revEnroll(t,nx);n++}});
     if(n){save();toast(n+' topic'+(n>1?'s':'')+' added to Mastery.')}renderRev();return;
